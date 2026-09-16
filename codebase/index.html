@@ -1,893 +1,501 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CP2 Interactive Prototype — Trợ lý Quy chế & Deadline Khóa 4</title>
-  <style>
-    :root {
-      --bg-primary: #313338;
-      --bg-secondary: #2b2d31;
-      --bg-tertiary: #1e1f22;
-      --accent-color: #5865f2;
-      --accent-hover: #4752c4;
-      --text-normal: #dbdee1;
-      --text-muted: #949ba4;
-      --text-link: #00a8fc;
-      --interactive-hover: #35373c;
-      --border-color: #3f4147;
-      --success-green: #23a55a;
-      --warning-amber: #f0b232;
-      --danger-red: #f23f43;
-      --badge-hax: #eb459e;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
-    }
-
-    body {
-      background: var(--bg-tertiary);
-      color: var(--text-normal);
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    /* Top Evaluation / Scenario Banner */
-    .top-toolbar {
-      background: #111214;
-      padding: 10px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 2px solid #232428;
-      font-size: 13px;
-      z-index: 100;
-    }
-
-    .top-toolbar .title-area {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .status-badge {
-      background: rgba(88, 101, 242, 0.2);
-      color: #5865f2;
-      padding: 3px 8px;
-      border-radius: 4px;
-      font-weight: 600;
-      font-size: 11px;
-      text-transform: uppercase;
-    }
-
-    .scenario-buttons {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .scenario-btn {
-      background: #2b2d31;
-      color: var(--text-normal);
-      border: 1px solid var(--border-color);
-      padding: 6px 12px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 12px;
-      font-weight: 500;
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .scenario-btn:hover {
-      background: var(--interactive-hover);
-      border-color: #5865f2;
-      color: #fff;
-    }
-
-    .scenario-btn.active {
-      background: var(--accent-color);
-      border-color: var(--accent-color);
-      color: #fff;
-    }
-
-    .btn-reset {
-      background: transparent;
-      border: 1px dashed var(--text-muted);
-      color: var(--text-muted);
-    }
-    .btn-reset:hover {
-      border-color: var(--danger-red);
-      color: var(--danger-red);
-    }
-
-    /* App Container */
-    .app-container {
-      display: flex;
-      flex: 1;
-      height: calc(100vh - 48px);
-      overflow: hidden;
-    }
-
-    /* Left Channels Sidebar */
-    .channels-sidebar {
-      width: 240px;
-      background: var(--bg-secondary);
-      display: flex;
-      flex-direction: column;
-      border-right: 1px solid #202225;
-    }
-
-    .server-header {
-      height: 48px;
-      padding: 0 16px;
-      display: flex;
-      align-items: center;
-      font-weight: 700;
-      font-size: 14px;
-      border-bottom: 1px solid #1f2023;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.2);
-    }
-
-    .channel-category {
-      padding: 16px 12px 6px 16px;
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .channel-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 7px 12px;
-      margin: 2px 8px;
-      border-radius: 4px;
-      color: var(--text-muted);
-      cursor: pointer;
-      font-size: 14px;
-      text-decoration: none;
-    }
-
-    .channel-item:hover {
-      background: var(--interactive-hover);
-      color: var(--text-normal);
-    }
-
-    .channel-item.active {
-      background: #35373c;
-      color: #fff;
-      font-weight: 500;
-    }
-
-    .channel-icon {
-      color: #80848e;
-      font-size: 16px;
-    }
-
-    .user-profile-bar {
-      margin-top: auto;
-      background: #232428;
-      padding: 8px 10px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .avatar-circle {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: #5865f2;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      color: white;
-      font-size: 13px;
-    }
-
-    .user-details {
-      display: flex;
-      flex-direction: column;
-      font-size: 12px;
-    }
-    .user-name { font-weight: 600; color: #fff; }
-    .user-status { color: var(--text-muted); font-size: 10px; }
-
-    /* Main Chat Area */
-    .chat-area {
-      flex: 1;
-      background: var(--bg-primary);
-      display: flex;
-      flex-direction: column;
-      position: relative;
-    }
-
-    .chat-header {
-      height: 48px;
-      padding: 0 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid var(--border-color);
-      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-    }
-
-    .chat-header-info {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 600;
-      font-size: 15px;
-    }
-
-    .chat-header-desc {
-      font-size: 12px;
-      color: var(--text-muted);
-      border-left: 1px solid var(--border-color);
-      padding-left: 10px;
-      margin-left: 10px;
-      font-weight: normal;
-    }
-
-    /* Messages Container */
-    .messages-container {
-      flex: 1;
-      overflow-y: auto;
-      padding: 16px 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    /* Message Item */
-    .message {
-      display: flex;
-      gap: 14px;
-      line-height: 1.5;
-      font-size: 14px;
-    }
-
-    .message .avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      color: #fff;
-    }
-    .avatar.user-avatar { background: #5865f2; }
-    .avatar.bot-avatar { background: #23a55a; }
-
-    .message-content-wrapper {
-      flex: 1;
-    }
-
-    .message-header {
-      display: flex;
-      align-items: baseline;
-      gap: 8px;
-      margin-bottom: 4px;
-    }
-
-    .author-name {
-      font-weight: 600;
-      color: #fff;
-      font-size: 14px;
-    }
-
-    .bot-tag {
-      background: var(--accent-color);
-      color: #fff;
-      font-size: 10px;
-      padding: 1px 4px;
-      border-radius: 3px;
-      font-weight: 600;
-      text-transform: uppercase;
-    }
-
-    .timestamp {
-      color: var(--text-muted);
-      font-size: 11px;
-    }
-
-    .message-text {
-      color: var(--text-normal);
-      font-size: 14px;
-    }
-
-    /* Welcome / HAX G1 Banner */
-    .welcome-card {
-      background: #2b2d31;
-      border-left: 4px solid var(--accent-color);
-      border-radius: 6px;
-      padding: 14px 16px;
-      margin-bottom: 12px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-    }
-
-    .hax-badge {
-      display: inline-block;
-      background: rgba(235, 69, 158, 0.2);
-      color: #f47fff;
-      border: 1px solid rgba(235, 69, 158, 0.4);
-      padding: 2px 6px;
-      border-radius: 3px;
-      font-size: 10px;
-      font-weight: bold;
-      margin-bottom: 6px;
-    }
-
-    .welcome-card h4 {
-      color: #fff;
-      margin-bottom: 6px;
-      font-size: 14px;
-    }
-
-    .welcome-card p {
-      color: var(--text-muted);
-      font-size: 13px;
-      margin-bottom: 8px;
-    }
-
-    .quick-chips-wrapper {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 8px;
-    }
-
-    .chip-btn {
-      background: #35373c;
-      border: 1px solid var(--border-color);
-      color: var(--text-normal);
-      padding: 5px 10px;
-      border-radius: 14px;
-      font-size: 12px;
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-    .chip-btn:hover {
-      background: var(--accent-color);
-      color: #fff;
-      border-color: var(--accent-color);
-    }
-
-    /* Response Card / Citations */
-    .bot-response-card {
-      background: #2b2d31;
-      border-radius: 6px;
-      padding: 12px 14px;
-      margin-top: 6px;
-      border: 1px solid var(--border-color);
-    }
-
-    .response-answer {
-      font-size: 14px;
-      color: #fff;
-      margin-bottom: 8px;
-      line-height: 1.4;
-    }
-
-    .citation-box {
-      background: #1e1f22;
-      border-left: 3px solid var(--success-green);
-      padding: 8px 12px;
-      border-radius: 4px;
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-bottom: 8px;
-    }
-    .citation-box strong {
-      color: #a6d3a0;
-    }
-
-    .action-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding-top: 6px;
-      border-top: 1px solid #35373c;
-      font-size: 12px;
-    }
-
-    .feedback-btn {
-      background: transparent;
-      border: 1px solid var(--border-color);
-      color: var(--text-muted);
-      padding: 4px 8px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 12px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      transition: all 0.2s;
-    }
-    .feedback-btn:hover {
-      background: var(--interactive-hover);
-      color: #fff;
-    }
-    .feedback-btn.correct-btn:hover {
-      color: var(--danger-red);
-      border-color: var(--danger-red);
-    }
-
-    /* Fallback / Failure Box */
-    .fallback-card {
-      background: rgba(242, 63, 67, 0.1);
-      border-left: 4px solid var(--danger-red);
-      padding: 12px 14px;
-      border-radius: 6px;
-      margin-top: 6px;
-    }
-
-    .btn-ticket {
-      background: var(--danger-red);
-      color: white;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 4px;
-      font-weight: 600;
-      font-size: 12px;
-      cursor: pointer;
-      margin-top: 8px;
-      display: inline-block;
-    }
-
-    /* Chat Input Bar */
-    .chat-input-area {
-      padding: 14px 20px;
-      background: var(--bg-primary);
-    }
-
-    .chat-input-wrapper {
-      background: #383a40;
-      border-radius: 8px;
-      padding: 10px 14px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .chat-input {
-      flex: 1;
-      background: transparent;
-      border: none;
-      color: #fff;
-      font-size: 14px;
-      outline: none;
-    }
-    .chat-input::placeholder {
-      color: var(--text-muted);
-    }
-
-    .send-btn {
-      background: var(--accent-color);
-      color: #fff;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 13px;
-    }
-
-    /* Correction Modal */
-    .modal-backdrop {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.7);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 200;
-    }
-    .modal-card {
-      background: #313338;
-      width: 440px;
-      border-radius: 8px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-      border: 1px solid var(--border-color);
-      overflow: hidden;
-    }
-    .modal-header {
-      padding: 16px 20px;
-      background: #2b2d31;
-      border-bottom: 1px solid var(--border-color);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .modal-header h3 {
-      font-size: 16px;
-      color: #fff;
-    }
-    .modal-body {
-      padding: 20px;
-      font-size: 13px;
-    }
-    .modal-body label {
-      display: block;
-      margin-bottom: 6px;
-      font-weight: 600;
-      color: var(--text-normal);
-    }
-    .modal-body select, .modal-body textarea {
-      width: 100%;
-      background: #1e1f22;
-      border: 1px solid var(--border-color);
-      color: #fff;
-      padding: 8px 10px;
-      border-radius: 4px;
-      margin-bottom: 14px;
-      outline: none;
-      font-size: 13px;
-    }
-    .modal-footer {
-      padding: 12px 20px;
-      background: #2b2d31;
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-    }
-    .btn-secondary {
-      background: transparent;
-      border: 1px solid var(--border-color);
-      color: #fff;
-      padding: 6px 14px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>#?-hỏi-trợ-lý-quy-chế · AI20K Cohort 4</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-chat:#313338; --bg-sidebar:#2b2d31; --bg-channels:#1e1f22;
+    --text-normal:#dbdee1; --text-muted:#949ba4; --text-bright:#f2f3f5;
+    --blurple:#5865f2; --online-purple:#9b5de5; --offline-blue:#3b82f6;
+    --danger:#f23f42; --success:#23a55a; --divider:#3f4147; --input-bg:#383a40;
+  }
+  *{font-family:'Inter',sans-serif; box-sizing:border-box;}
+  body{background:var(--bg-chat); margin:0; overflow:hidden;}
+  ::-webkit-scrollbar{width:8px;}
+  ::-webkit-scrollbar-thumb{background:#1a1b1e; border-radius:4px;}
+  ::-webkit-scrollbar-track{background:transparent;}
+  .msg-enter{animation:msgIn .22s ease-out;}
+  @keyframes msgIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+  .typing-dot{animation:blink 1.2s infinite; display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--text-muted);}
+  .typing-dot:nth-child(2){animation-delay:.2s;} .typing-dot:nth-child(3){animation-delay:.4s;}
+  @keyframes blink{0%,80%,100%{opacity:.25;} 40%{opacity:1;}}
+  .chip-btn:hover{background:#4752c4 !important;}
+  .quick-prompt:hover{background:#3f4147;}
+  .fade-scroll{scroll-behavior:smooth;}
+  .badge-offline{background:rgba(59,130,246,.15); color:#7db3ff; border:1px solid rgba(59,130,246,.35);}
+  .badge-online{background:rgba(155,93,229,.15); color:#c9a3f7; border:1px solid rgba(155,93,229,.35);}
+  .badge-danger{background:rgba(242,63,66,.15); color:#ff8a8c; border:1px solid rgba(242,63,66,.35);}
+  .citebox{background:#2b2d31; border-left:3px solid #5865f2;}
+  .modal-backdrop{background:rgba(0,0,0,.6);}
+</style>
 </head>
-<body>
+<body class="h-screen w-screen text-[var(--text-normal)]">
 
-  <!-- Top Scenario Switcher (CP2 Quick Testing Bar) -->
-  <div class="top-toolbar">
-    <div class="title-area">
-      <span class="status-badge">CP2 Prototype · Mock</span>
-      <strong>Khóa 4 · Lớp 3A · Track B: Trợ lý Quy chế & Deadline</strong>
-    </div>
-    <div class="scenario-buttons">
-      <span style="color: var(--text-muted); font-size: 12px; margin-right: 4px;">Kịch bản kiểm thử:</span>
-      <button class="scenario-btn active" onclick="loadScenario(1)">1. Happy Path</button>
-      <button class="scenario-btn" onclick="loadScenario(2)">2. Low-Confidence</button>
-      <button class="scenario-btn" onclick="loadScenario(3)">3. Failure / No-Grounding</button>
-      <button class="scenario-btn" onclick="loadScenario(4)">4. Correction (Sửa sai)</button>
-      <button class="scenario-btn btn-reset" onclick="resetChat()">↺ Reset</button>
-    </div>
+<div class="flex h-full w-full">
+
+  <!-- SERVER RAIL -->
+  <div class="w-[72px] bg-[var(--bg-channels)] flex flex-col items-center py-3 gap-2 shrink-0">
+    <div class="w-12 h-12 rounded-2xl bg-[var(--blurple)] flex items-center justify-center text-white font-bold text-sm">A20K</div>
+    <div class="w-8 h-[2px] bg-[var(--divider)] rounded-full my-1"></div>
+    <div class="w-12 h-12 rounded-full bg-[#2b2d31] flex items-center justify-center text-[var(--text-muted)] text-xs">TA</div>
+    <div class="w-12 h-12 rounded-full bg-[#2b2d31] flex items-center justify-center text-[var(--text-muted)] text-xs">BTC</div>
   </div>
 
-  <div class="app-container">
-    <!-- Left Discord Sidebar -->
-    <div class="channels-sidebar">
-      <div class="server-header">Mini Hackathon AI · B04</div>
-      <div class="channel-category">Kênh Tra cứu & Hỗ trợ</div>
-      <div class="channel-item">
-        <span class="channel-icon">📢</span> thông-báo-chung
-      </div>
-      <div class="channel-item active">
-        <span class="channel-icon">🤖</span> hỏi-trợ-lý-kute
-      </div>
-      <div class="channel-item">
-        <span class="channel-icon">❓</span> hoi-tro-giang-e403
-      </div>
-      <div class="channel-item">
-        <span class="channel-icon">💬</span> tán-gẫu
-      </div>
-
-      <div class="user-profile-bar">
-        <div class="avatar-circle">H</div>
-        <div class="user-details">
-          <span class="user-name">Học viên 3A</span>
-          <span class="user-status">#2A2026xxxx · Online</span>
-        </div>
-      </div>
+  <!-- CHANNEL LIST -->
+  <div class="w-60 bg-[var(--bg-sidebar)] flex flex-col shrink-0">
+    <div class="h-12 flex items-center px-4 border-b border-[var(--divider)] shadow-sm">
+      <span class="font-semibold text-[var(--text-bright)] text-sm truncate">AI20K Cohort 4</span>
     </div>
-
-    <!-- Main Discord Chat Area -->
-    <div class="chat-area">
-      <div class="chat-header">
-        <div class="chat-header-info">
-          <span class="channel-icon">🤖</span>
-          <span>hỏi-trợ-lý-kute</span>
-          <span class="chat-header-desc">Kênh tra cứu tự động mốc hạn bài tập & quy chế học vụ Khóa 4</span>
-        </div>
+    <div class="flex-1 overflow-y-auto px-2 pt-4">
+      <div class="text-xs font-semibold text-[var(--text-muted)] px-2 mb-1 uppercase tracking-wide">Kênh chung</div>
+      <div class="flex items-center gap-1.5 px-2 py-1.5 rounded text-[var(--text-muted)] text-sm mb-0.5"># thông-báo</div>
+      <div class="flex items-center gap-1.5 px-2 py-1.5 rounded text-[var(--text-muted)] text-sm mb-0.5"># check-in</div>
+      <div class="text-xs font-semibold text-[var(--text-muted)] px-2 mt-4 mb-1 uppercase tracking-wide">Hỗ trợ học vụ</div>
+      <div class="flex items-center gap-1.5 px-2 py-1.5 rounded bg-[#404249] text-[var(--text-bright)] text-sm font-medium mb-0.5">
+        <span class="text-[var(--text-muted)]">#</span>?-hỏi-trợ-lý-quy-chế
       </div>
-
-      <!-- Messages Stream -->
-      <div class="messages-container" id="messagesContainer">
-        <!-- Default Welcome / HAX G1 Banner -->
-        <div class="welcome-card">
-          <span class="hax-badge">HAX G1 · NĂNG LỰC & PHẠM VI HỆ THỐNG</span>
-          <h4>👋 Xin chào học viên! Tôi là Trợ lý Quy chế & Lịch nộp bài Khóa 4</h4>
-          <p>Tôi hỗ trợ tra cứu chính xác: <strong>Hạn nộp bài Lab, Báo cáo Daily Standup, Workshop và Quy chế điểm danh</strong>. Tránh hỏi các câu chuyện ngoài lề.</p>
-          <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 4px;">Câu hỏi mẫu hay gặp:</div>
-          <div class="quick-chips-wrapper">
-            <button class="chip-btn" onclick="sendQuickQuery('Hạn nộp bài Lab 02 là khi nào?')">📅 Hạn nộp bài Lab 02</button>
-            <button class="chip-btn" onclick="sendQuickQuery('Nộp muộn Daily Standup bị trừ mấy điểm?')">⏰ Quy chế nộp Daily muộn</button>
-            <button class="chip-btn" onclick="sendQuickQuery('Hôm nay phải nộp những bài gì?')">❓ Hôm nay nộp bài gì?</button>
-            <button class="chip-btn" onclick="sendQuickQuery('Thầy dạy học thích uống trà sữa gì?')">☕ Thầy thích uống gì? (Ngoài lề)</button>
-          </div>
-        </div>
-
-        <div id="dynamicMessages"></div>
-      </div>
-
-      <!-- Chat Input Field -->
-      <div class="chat-input-area">
-        <div class="chat-input-wrapper">
-          <input type="text" id="userInput" class="chat-input" placeholder="Gõ câu hỏi về quy chế hoặc chọn kịch bản phía trên..." onkeydown="handleKey(event)">
-          <button class="send-btn" onclick="handleSend()">Gửi</button>
-        </div>
+      <div class="flex items-center gap-1.5 px-2 py-1.5 rounded text-[var(--text-muted)] text-sm mb-0.5"># daily-standup</div>
+      <div class="flex items-center gap-1.5 px-2 py-1.5 rounded text-[var(--text-muted)] text-sm mb-0.5"># mentor-duty</div>
+    </div>
+    <div class="h-14 bg-[#232428] flex items-center px-2 gap-2">
+      <div class="w-8 h-8 rounded-full bg-[#5865f2] flex items-center justify-center text-xs font-bold text-white">HV</div>
+      <div class="flex-1 leading-tight">
+        <div class="text-xs font-semibold text-[var(--text-bright)]">hocvien_ai20k</div>
+        <div class="text-[10px] text-[var(--text-muted)]">#0420</div>
       </div>
     </div>
   </div>
 
-  <!-- Modal Correction (HAX G9) -->
-  <div class="modal-backdrop" id="correctionModal">
-    <div class="modal-card">
-      <div class="modal-header">
-        <h3><span class="hax-badge">HAX G9</span> Báo sai / Sửa đổi ngữ cảnh</h3>
-        <button onclick="closeModal()" style="background:transparent; border:none; color:var(--text-muted); font-size:18px; cursor:pointer;">✕</button>
-      </div>
-      <div class="modal-body">
-        <label>1. Bot đã hiểu nhầm loại nhiệm vụ nào?</label>
-        <select id="correctType">
-          <option value="daily">Hiểu nhầm sang: Báo cáo Daily Standup (10:00 AM)</option>
-          <option value="lab" selected>Hiểu nhầm sang: Bài tập Lab thực hành (23:59 PM)</option>
-          <option value="workshop">Hiểu nhầm sang: Workshop cuối tuần</option>
-          <option value="quiz">Hiểu nhầm sang: Bài kiểm tra Quiz</option>
-        </select>
+  <!-- CHAT AREA -->
+  <div class="flex-1 flex flex-col min-w-0">
+    <div class="h-12 flex items-center px-4 border-b border-[var(--divider)] shadow-sm gap-2 shrink-0">
+      <span class="text-[var(--text-muted)]">#</span>
+      <span class="font-semibold text-[var(--text-bright)] text-sm">?-hỏi-trợ-lý-quy-chế</span>
+      <span class="text-[var(--text-muted)] text-xs ml-2 border-l border-[var(--divider)] pl-2 hidden sm:inline">Trợ lý Quy chế · phân định Offline VinUni vs Online Build Phase</span>
+    </div>
 
-        <label>2. Góp ý / Báo sai cụ thể:</label>
-        <textarea id="correctNotes" rows="3" placeholder="VD: Lịch Lab 02 đã được Lab Coach dời sang 12h trưa mai, bot vẫn báo 24h đêm nay..."></textarea>
+    <div id="chatScroll" class="flex-1 overflow-y-auto fade-scroll px-4 py-4 space-y-4"></div>
+
+    <!-- QUICK PROMPTS -->
+    <div class="px-4 pb-2">
+      <div class="text-[11px] text-[var(--text-muted)] mb-1.5 px-1">Câu hỏi thường gặp — bấm thử 4 kịch bản:</div>
+      <div class="flex flex-wrap gap-2">
+        <button onclick="sendPreset('🎯','Lịch sử điểm danh trên lớp xem ở đâu?')" class="quick-prompt text-xs px-3 py-1.5 rounded-full border border-[var(--divider)] text-[var(--text-normal)] transition">🎯 Happy path: xem lịch sử điểm danh</button>
+        <button onclick="sendPreset('⚠️','Nghỉ có bị trừ điểm / rớt môn không?')" class="quick-prompt text-xs px-3 py-1.5 rounded-full border border-[var(--divider)] text-[var(--text-normal)] transition">⚠️ Mơ hồ: nghỉ có bị trừ điểm không</button>
+        <button onclick="sendPreset('⛔','Hôm nay em xin nghỉ ốm, sửa điểm danh giúp em.')" class="quick-prompt text-xs px-3 py-1.5 rounded-full border border-[var(--divider)] text-[var(--text-normal)] transition">⛔ Ngoài thẩm quyền: nhờ sửa điểm danh</button>
+        <button onclick="sendPreset('🔄','Nộp daily standup muộn có bị tính vắng học không?')" class="quick-prompt text-xs px-3 py-1.5 rounded-full border border-[var(--divider)] text-[var(--text-normal)] transition">🔄 Standup vs điểm danh</button>
       </div>
-      <div class="modal-footer">
-        <button class="btn-secondary" onclick="closeModal()">Hủy</button>
-        <button class="send-btn" onclick="submitCorrection()">Lưu & Cập nhật kết quả</button>
+    </div>
+
+    <!-- INPUT -->
+    <div class="px-4 pb-5 shrink-0">
+      <div class="bg-[var(--input-bg)] rounded-lg flex items-center px-4 gap-3">
+        <input id="chatInput" type="text" placeholder="Nhắn tin tới #?-hỏi-trợ-lý-quy-chế"
+          class="flex-1 bg-transparent outline-none text-sm py-3 text-[var(--text-normal)] placeholder-[var(--text-muted)]"
+          onkeydown="if(event.key==='Enter')handleSend()">
+        <button onclick="handleSend()" class="text-[var(--text-muted)] hover:text-[var(--text-bright)] text-sm font-medium py-2">Gửi</button>
       </div>
     </div>
   </div>
+</div>
 
-  <script>
-    const dynamicMessages = document.getElementById('dynamicMessages');
-    const messagesContainer = document.getElementById('messagesContainer');
-    const userInput = document.getElementById('userInput');
-    const correctionModal = document.getElementById('correctionModal');
+<!-- EMAIL MODAL -->
+<div id="emailModal" class="fixed inset-0 modal-backdrop hidden items-center justify-center z-50">
+  <div class="bg-[#313338] w-[440px] rounded-lg p-5 border border-[var(--divider)]">
+    <div class="flex items-center justify-between mb-3">
+      <h3 class="text-[var(--text-bright)] font-semibold text-sm">Mẫu email gửi bộ phận học vụ</h3>
+      <button onclick="closeModal()" class="text-[var(--text-muted)] hover:text-white">✕</button>
+    </div>
+    <div class="bg-[#2b2d31] rounded p-3 text-xs text-[var(--text-normal)] leading-relaxed space-y-1.5" id="emailContent">
+      <div><span class="text-[var(--text-muted)]">Đến:</span> AIthucchien@vinuni.edu.vn</div>
+      <div><span class="text-[var(--text-muted)]">Tiêu đề:</span> [Cohort 4] Xin xác nhận điểm danh / lý do nghỉ buổi học</div>
+      <div class="pt-1 text-[var(--text-muted)]">Nội dung:</div>
+      <div>Em chào Lab Coach / bộ phận học vụ,<br>Em là [Họ tên] – [Mã học viên], lớp AI20K Cohort 4.<br>Em xin xác nhận/khiếu nại về điểm danh buổi [ngày/tháng] vì lý do [lý do nghỉ]. Em đã đính kèm ảnh chụp form QR (nếu có). Em xin phép Lab Coach hỗ trợ xác nhận giúp em ạ.<br>Em cảm ơn!</div>
+    </div>
+    <button onclick="copyEmail()" id="copyBtn" class="mt-3 w-full bg-[var(--blurple)] hover:bg-[#4752c4] text-white text-xs font-medium py-2 rounded">Sao chép nội dung email</button>
+  </div>
+</div>
 
-    function scrollToBottom() {
-      messagesContainer.scrollTop = messagesContainer.scrollHeight;
-    }
+<script>
+const chatScroll = document.getElementById('chatScroll');
 
-    function resetChat() {
-      dynamicMessages.innerHTML = '';
-      document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active'));
-    }
+function scrollDown(){ requestAnimationFrame(()=>{ chatScroll.scrollTop = chatScroll.scrollHeight; }); }
 
-    function appendUserMessage(text) {
-      const msgDiv = document.createElement('div');
-      msgDiv.className = 'message';
-      msgDiv.innerHTML = `
-        <div class="avatar user-avatar">H</div>
-        <div class="message-content-wrapper">
-          <div class="message-header">
-            <span class="author-name">Học viên 3A</span>
-            <span class="timestamp">Vừa xong</span>
-          </div>
-          <div class="message-text">${text}</div>
+function timeNow(){
+  const d = new Date();
+  return d.toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit'});
+}
+
+function userBubble(text){
+  const div = document.createElement('div');
+  div.className = 'msg-enter flex gap-3';
+  div.innerHTML = `
+    <div class="w-9 h-9 rounded-full bg-[#5865f2] flex items-center justify-center text-xs font-bold text-white shrink-0">HV</div>
+    <div class="min-w-0">
+      <div class="flex items-baseline gap-2">
+        <span class="text-sm font-semibold text-[var(--text-bright)]">hocvien_ai20k</span>
+        <span class="text-[10px] text-[var(--text-muted)]">${timeNow()}</span>
+      </div>
+      <div class="text-sm text-[var(--text-normal)] mt-0.5 break-words">${escapeHtml(text)}</div>
+    </div>`;
+  chatScroll.appendChild(div);
+  scrollDown();
+}
+
+function escapeHtml(s){
+  const e = document.createElement('div'); e.textContent = s; return e.innerHTML;
+}
+
+function typingIndicator(){
+  const div = document.createElement('div');
+  div.id = 'typingRow';
+  div.className = 'msg-enter flex gap-3 items-center';
+  div.innerHTML = `
+    <div class="w-9 h-9 rounded-full bg-[#23a55a] flex items-center justify-center text-xs font-bold text-white shrink-0">TL</div>
+    <div class="text-xs text-[var(--text-muted)] flex items-center gap-2">
+      <span>Trợ lý Quy chế đang gõ</span>
+      <span class="flex gap-1"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></span>
+    </div>`;
+  chatScroll.appendChild(div);
+  scrollDown();
+}
+
+function removeTyping(){
+  const el = document.getElementById('typingRow');
+  if(el) el.remove();
+}
+
+// badgeType: 'offline' | 'online' | 'danger' | null
+function botBubble({ text, badgeType, badgeLabel, citation, chips, actions, showConfirmed }){
+  const div = document.createElement('div');
+  div.className = 'msg-enter flex gap-3';
+
+  let badgeHtml = '';
+  if(badgeType){
+    const cls = badgeType === 'offline' ? 'badge-offline' : badgeType === 'online' ? 'badge-online' : 'badge-danger';
+    badgeHtml = `<span class="inline-block text-[10px] font-semibold px-2 py-0.5 rounded ${cls} mb-1.5">${badgeLabel}</span><br>`;
+  }
+
+  let citeHtml = '';
+  if(citation){
+    citeHtml = `<div class="citebox rounded px-3 py-2 mt-2 text-xs text-[var(--text-muted)]">
+      <span class="font-semibold text-[var(--text-normal)]">Căn cứ quy chế:</span> ${citation}
+    </div>`;
+  }
+
+  let chipsHtml = '';
+  const chipId = 'chips-' + Math.random().toString(36).slice(2,8);
+  if(chips){
+    chipsHtml = `<div id="${chipId}" class="flex gap-2 mt-2 flex-wrap">
+      ${chips.map(c => `<button onclick="handleChip('${chipId}','${c.value}')" class="chip-btn text-xs font-medium px-3 py-1.5 rounded bg-[var(--blurple)] text-white transition">${c.label}</button>`).join('')}
+    </div>`;
+  }
+
+  const actionId = 'act-' + Math.random().toString(36).slice(2,8);
+  let actionsHtml = '';
+  if(actions !== false){
+    actionsHtml = `<div id="${actionId}" class="flex gap-2 mt-2.5">
+      <button onclick="markGood('${actionId}')" class="text-xs px-2.5 py-1 rounded border border-[var(--divider)] text-[var(--text-muted)] hover:text-[var(--success)] hover:border-[var(--success)] transition">👍 Đúng ý</button>
+      <button onclick="forwardTA('${actionId}', this)" class="text-xs px-2.5 py-1 rounded border border-[var(--divider)] text-[var(--text-muted)] hover:text-[var(--danger)] hover:border-[var(--danger)] transition">🚩 Sai thông tin / Chuyển cho TA</button>
+    </div>`;
+  }
+
+  div.innerHTML = `
+    <div class="w-9 h-9 rounded-full bg-[#23a55a] flex items-center justify-center text-xs font-bold text-white shrink-0">TL</div>
+    <div class="min-w-0 max-w-[560px]">
+      <div class="flex items-baseline gap-2">
+        <span class="text-sm font-semibold text-[var(--text-bright)]">Trợ lý Quy chế</span>
+        <span class="text-[9px] bg-[var(--blurple)] text-white px-1 rounded font-semibold">BOT</span>
+        <span class="text-[10px] text-[var(--text-muted)]">${timeNow()}</span>
+      </div>
+      <div class="text-sm text-[var(--text-normal)] mt-1 leading-relaxed">
+        ${badgeHtml}${text}
+      </div>
+      ${citeHtml}
+      ${chipsHtml}
+      ${actionsHtml}
+    </div>`;
+  chatScroll.appendChild(div);
+  scrollDown();
+}
+
+function markGood(actionId){
+  const el = document.getElementById(actionId);
+  if(el) el.innerHTML = `<span class="text-xs text-[var(--success)]">✓ Cảm ơn phản hồi của bạn!</span>`;
+}
+
+function forwardTA(actionId, btn){
+  const el = document.getElementById(actionId);
+  if(el) el.innerHTML = `<span class="text-xs text-[var(--text-muted)]">Đang chuyển cho TA...</span>`;
+  setTimeout(()=>{
+    const div = document.createElement('div');
+    div.className = 'msg-enter flex gap-3';
+    div.innerHTML = `
+      <div class="w-9 h-9 rounded-full bg-[#f23f42] flex items-center justify-center text-xs font-bold text-white shrink-0">TA</div>
+      <div class="min-w-0 max-w-[560px]">
+        <div class="flex items-baseline gap-2">
+          <span class="text-sm font-semibold text-[var(--text-bright)]">TA-Bridge</span>
+          <span class="text-[9px] bg-[#f23f42] text-white px-1 rounded font-semibold">SYSTEM</span>
+          <span class="text-[10px] text-[var(--text-muted)]">${timeNow()}</span>
         </div>
-      `;
-      dynamicMessages.appendChild(msgDiv);
-      scrollToBottom();
-    }
-
-    function appendBotMessage(contentHtml) {
-      const msgDiv = document.createElement('div');
-      msgDiv.className = 'message';
-      msgDiv.innerHTML = `
-        <div class="avatar bot-avatar">🤖</div>
-        <div class="message-content-wrapper">
-          <div class="message-header">
-            <span class="author-name">Trợ lý Quy chế</span>
-            <span class="bot-tag">BOT</span>
-            <span class="timestamp">Vừa xong</span>
-          </div>
-          ${contentHtml}
+        <div class="text-sm text-[var(--text-normal)] mt-1 leading-relaxed">
+          Đã tạo ticket chuyển tiếp cho TA kèm bản tóm tắt hội thoại gần nhất của bạn. TA sẽ phản hồi trực tiếp trong kênh này trong thời gian sớm nhất. 🙏
         </div>
-      `;
-      dynamicMessages.appendChild(msgDiv);
-      scrollToBottom();
-    }
+      </div>`;
+    chatScroll.appendChild(div);
+    if(el) el.innerHTML = `<span class="text-xs text-[var(--danger)]">🚩 Đã chuyển cho TA</span>`;
+    scrollDown();
+  }, 700);
+}
 
-    function loadScenario(scenarioNumber) {
-      resetChat();
-      document.querySelectorAll('.scenario-btn').forEach((b, idx) => {
-        if (idx === scenarioNumber - 1) b.classList.add('active');
-      });
+function handleChip(chipId, value){
+  const el = document.getElementById(chipId);
+  if(el) el.remove();
+  userBubble(value === 'offline' ? 'Buổi học trên lớp' : 'Buổi Workshop online');
+  typingIndicator();
+  setTimeout(()=>{
+    removeTyping();
+    if(value === 'offline') respondOfflineAttendance();
+    else respondOnlineWorkshop();
+  }, 700);
+}
 
-      if (scenarioNumber === 1) {
-        // SCENARIO 1: HAPPY PATH (HIGH CONFIDENCE)
-        appendUserMessage("Hạn nộp bài Lab 02 là khi nào vậy bot?");
-        setTimeout(() => {
-          appendBotMessage(`
-            <div class="bot-response-card">
-              <span class="hax-badge">HAX G2 · NGUỒN CĂN CỨ XÁC THỰC (CONFIDENCE: 98%)</span>
-              <div class="response-answer">
-                Hạn chót nộp bài <strong>Lab 02</strong> là <strong>23:59 ngày 16/09/2026</strong>.
-                <br>• Lưu ý: Nộp bài qua đường dẫn repo GitHub nộp bài của nhóm.
-              </div>
-              <div class="citation-box">
-                📖 <strong>Nguồn trích dẫn:</strong> Sổ tay Học vụ Khóa 4 · Mục 3.1 Quy định thời hạn nộp bài Lab (Cập nhật 15/09).
-              </div>
-              <div class="action-row">
-                <span>Câu trả lời có chính xác không?</span>
-                <button class="feedback-btn" onclick="alert('Cảm ơn bạn đã xác nhận!')">👍 Hữu ích</button>
-                <button class="feedback-btn correct-btn" onclick="openModal()">👎 Báo sai / Sửa ngữ cảnh</button>
-              </div>
-            </div>
-          `);
-        }, 300);
-      } else if (scenarioNumber === 2) {
-        // SCENARIO 2: LOW CONFIDENCE (DISAMBIGUATION)
-        appendUserMessage("Hôm nay phải nộp những bài gì vậy bot?");
-        setTimeout(() => {
-          appendBotMessage(`
-            <div class="bot-response-card">
-              <span class="hax-badge" style="background: rgba(240, 178, 50, 0.2); color: #f0b232; border-color: rgba(240, 178, 50, 0.4);">
-                KỊCH BẢN 2: ĐỘ TỰ TIN TRUNG BÌNH · MƠ HỒ NGỮ CẢNH
-              </span>
-              <div class="response-answer">
-                Hôm nay (16/09) có <strong>2 mốc nộp bài</strong> với quy chế khác nhau. Bạn đang muốn tra cứu loại bài nào?
-              </div>
-              <div class="quick-chips-wrapper" style="margin-top: 6px;">
-                <button class="chip-btn" onclick="selectDisambiguation('daily')">
-                  ☀️ 1. Báo cáo Daily Standup (Hạn 10:00 sáng)
-                </button>
-                <button class="chip-btn" onclick="selectDisambiguation('lab')">
-                  💻 2. Bài tập Lab 02 (Hạn 23:59 đêm)
-                </button>
-              </div>
-            </div>
-          `);
-        }, 300);
-      } else if (scenarioNumber === 3) {
-        // SCENARIO 3: FAILURE / NO-GROUNDING (OUT OF SCOPE)
-        appendUserMessage("Thầy giáo thích uống trà sữa loại gì?");
-        setTimeout(() => {
-          appendBotMessage(`
-            <div class="fallback-card">
-              <span class="hax-badge">HAX G10 · THOÁI LUI NHÃ NHẶN (KHÔNG BỊA ĐẶT)</span>
-              <div style="color: #fff; font-weight: 600; margin-bottom: 4px;">
-                ⚠️ Không tìm thấy căn cứ thông tin trong tài liệu
-              </div>
-              <div style="font-size: 13px; color: var(--text-normal); margin-bottom: 8px;">
-                Hệ thống chỉ hỗ trợ giải đáp <strong>quy chế, deadline và tiêu chí học vụ</strong> của Khóa 4. Câu hỏi của bạn nằm ngoài phạm vi hoặc không có trong quy chế chính thức.
-              </div>
-              <div style="font-size: 12px; color: var(--text-muted);">
-                Nếu đây là thắc mắc cần trợ giúp gấp về việc học tập, bạn hãy liên hệ trực tiếp với Trợ giảng:
-              </div>
-              <button class="btn-ticket" onclick="alert('Đã gửi thông báo tới kênh #hoi-tro-giang-e403! Trợ giảng sẽ phản hồi bạn trong 10 phút.')">
-                🎫 Tạo yêu cầu hỗ trợ tới Trợ giảng (TA)
-              </button>
-            </div>
-          `);
-        }, 300);
-      } else if (scenarioNumber === 4) {
-        // SCENARIO 4: CORRECTION
-        loadScenario(1);
-        setTimeout(() => {
-          openModal();
-        }, 600);
-      }
-    }
+// ===== RESPONSE BUILDERS =====
 
-    function selectDisambiguation(type) {
-      if (type === 'daily') {
-        appendUserMessage("Tôi muốn hỏi về: Báo cáo Daily Standup");
-        setTimeout(() => {
-          appendBotMessage(`
-            <div class="bot-response-card">
-              <span class="hax-badge">HAX G2 · ĐÃ XÁC ĐỊNH NGỮ CẢNH: DAILY STANDUP</span>
-              <div class="response-answer">
-                Hạn nộp <strong>Báo cáo Daily Standup</strong> hôm nay là <strong>10:00 sáng</strong>.
-                <br>• Lưu ý: Nộp muộn sau 10:00 vẫn được ghi nhận điểm danh nhưng <strong>không được cộng điểm chuyên cần (+XP)</strong>.
-              </div>
-              <div class="citation-box">
-                📖 <strong>Nguồn:</strong> Quy chế hoạt động nhóm & Daily Standup Khoá 4.
-              </div>
-            </div>
-          `);
-        }, 300);
-      } else {
-        appendUserMessage("Tôi muốn hỏi về: Bài tập Lab 02");
-        setTimeout(() => {
-          appendBotMessage(`
-            <div class="bot-response-card">
-              <span class="hax-badge">HAX G2 · ĐÃ XÁC ĐỊNH NGỮ CẢNH: BÀI TẬP LAB</span>
-              <div class="response-answer">
-                Hạn nộp <strong>Bài tập Lab 02</strong> là <strong>23:59 ngày 16/09/2026</strong>.
-                <br>• Lưu ý: Nộp muộn sau 23:59 sẽ bị trừ 50% số điểm bài Lab, sau 12h trưa hôm sau nhận 0 điểm.
-              </div>
-              <div class="citation-box">
-                📖 <strong>Nguồn:</strong> Quy chế chấm điểm Lab · Điều 2.4.
-              </div>
-            </div>
-          `);
-        }, 300);
-      }
-    }
+function respondHappyPathAttendance(){
+  botBubble({
+    text: `Lịch sử điểm danh <b>buổi học trên lớp</b> được ghi nhận qua mã <b>QR Microsoft Form</b> quét tại phòng học, chưa đồng bộ lên app MyVinUni. Nếu cần xác nhận, hãy giữ lại ảnh chụp màn hình form. Vắng quá <b>4 buổi</b> sẽ bị tính rớt môn.<br><br>⚠️ Lưu ý: đây <b>KHÔNG PHẢI</b> điểm XP cày rank Discord — lệnh <code class="bg-[#2b2d31] px-1 rounded">/rank</code> chỉ hiển thị điểm hoạt động Discord, không liên quan điểm danh lớp học.`,
+    badgeType: 'offline',
+    badgeLabel: '📘 HỌC VỤ OFFLINE — TRƯỜNG VINUNI',
+    citation: 'Ma trận quy chế — mục "Điểm danh / Chuyên cần" (Hệ thống 1: Offline VinUni/VLearn).'
+  });
+}
 
-    function sendQuickQuery(text) {
-      userInput.value = text;
-      handleSend();
-    }
+function respondAmbiguousAbsence(){
+  botBubble({
+    text: `Câu hỏi này có thể áp dụng cho <b>2 hệ thống khác nhau</b>. Bạn đang hỏi về buổi nào?`,
+    badgeType: null,
+    chips: [
+      { label: '🏫 Buổi học trên lớp', value: 'offline' },
+      { label: '💻 Buổi Workshop online', value: 'online' }
+    ],
+    actions: false
+  });
+}
 
-    function handleKey(e) {
-      if (e.key === 'Enter') handleSend();
-    }
+function respondOfflineAttendance(){
+  botBubble({
+    text: `<b>Buổi học trên lớp (Offline):</b> vắng quá <b>4 buổi</b> sẽ bị tính <b>rớt môn</b>. Điểm danh qua QR Microsoft Form tại phòng, chưa đồng bộ MyVinUni — nên lưu ảnh chụp form.`,
+    badgeType: 'offline',
+    badgeLabel: '📘 HỌC VỤ OFFLINE — TRƯỜNG VINUNI',
+    citation: 'Ma trận quy chế — mục "Điểm danh / Chuyên cần" (Hệ thống 1).'
+  });
+}
 
-    function handleSend() {
-      const val = userInput.value.trim();
-      if (!val) return;
-      appendUserMessage(val);
-      userInput.value = '';
+function respondOnlineWorkshop(){
+  botBubble({
+    text: `<b>Buổi Workshop online (Discord/Phoenix):</b> điểm danh tự động qua Zoom bằng cú pháp tên chuẩn, tích lũy <b>điểm XP</b>. Vắng ở đây <b>không</b> ảnh hưởng đến số buổi nghỉ tính trên lớp.`,
+    badgeType: 'online',
+    badgeLabel: '🟣 BUILD PHASE ONLINE — DISCORD',
+    citation: 'Ma trận quy chế — mục "Điểm danh / Chuyên cần" (Hệ thống 2: Online Build Phase).'
+  });
+}
 
-      const lower = val.toLowerCase();
-      setTimeout(() => {
-        if (lower.includes('thích') || lower.includes('uống') || lower.includes('tán gẫu')) {
-          loadScenario(3);
-        } else if (lower.includes('hôm nay') && !lower.includes('lab') && !lower.includes('daily')) {
-          loadScenario(2);
-        } else if (lower.includes('daily') || lower.includes('standup')) {
-          selectDisambiguation('daily');
-        } else {
-          loadScenario(1);
-        }
-      }, 400);
-    }
+function respondOutOfScope(){
+  botBubble({
+    text: `Mình hiểu bạn đang lo lắng, nhưng mình <b>không có thẩm quyền</b> chỉnh sửa điểm danh hay xác nhận nghỉ phép thay trường. Đây là việc thuộc thẩm quyền của Lab Coach / bộ phận học vụ VinUni.<br><br>Bạn có thể:`,
+    badgeType: 'danger',
+    badgeLabel: '⛔ NGOÀI THẨM QUYỀN CỦA BOT',
+    citation: 'Ma trận quy chế — mục "Thẩm quyền giải quyết" (Hệ thống 1: Offline).'
+  });
+  const div = document.createElement('div');
+  div.className = 'msg-enter flex gap-3 -mt-2';
+  div.innerHTML = `
+    <div class="w-9 h-9 shrink-0"></div>
+    <div class="flex gap-2 flex-wrap">
+      <button onclick="openModal()" class="text-xs font-medium px-3 py-1.5 rounded bg-[var(--blurple)] text-white hover:bg-[#4752c4] transition">📧 Mở mẫu email gửi IT/Lab Coach</button>
+      <button onclick="showTicketCmd()" class="text-xs font-medium px-3 py-1.5 rounded border border-[var(--divider)] text-[var(--text-normal)] hover:border-[var(--blurple)] transition">🎫 Lệnh mở Ticket Discord</button>
+    </div>`;
+  chatScroll.appendChild(div);
+  scrollDown();
+}
 
-    function openModal() {
-      correctionModal.style.display = 'flex';
-    }
-    function closeModal() {
-      correctionModal.style.display = 'none';
-    }
+function respondStandupVsAttendance(){
+  botBubble({
+    text: `Nộp <code class="bg-[#2b2d31] px-1 rounded">/daily-standup</code> muộn (sau 10h sáng) vẫn được ghi nhận nhưng <b>không được cộng XP</b>. Việc này <b>hoàn toàn không ảnh hưởng</b> đến điểm danh buổi học trên lớp — hai hệ thống độc lập nhau.`,
+    badgeType: 'online',
+    badgeLabel: '🟣 BUILD PHASE ONLINE — DISCORD',
+    citation: 'Ma trận quy chế — mục "Báo cáo hàng ngày" (Hệ thống 2: Online Build Phase).'
+  });
+}
 
-    function submitCorrection() {
-      const type = document.getElementById('correctType').value;
-      const notes = document.getElementById('correctNotes').value;
-      closeModal();
+function respondXP(){
+  botBubble({
+    text: `Điểm <b>XP</b> đến từ hoạt động cày rank trên Discord (dùng cho <code class="bg-[#2b2d31] px-1 rounded">/leaderboard</code>) và <b>không</b> được tính vào điểm học tập / qua môn trên trường.`,
+    badgeType: 'online',
+    badgeLabel: '🟣 BUILD PHASE ONLINE — DISCORD',
+    citation: 'Ma trận quy chế — mục "Điểm số & XP" (Hệ thống 2).'
+  });
+}
 
-      appendBotMessage(`
-        <div class="bot-response-card" style="border-left: 4px solid var(--badge-hax);">
-          <span class="hax-badge">HAX G9 · ĐÃ GHI NHẬN ĐIỀU CHỈNH TỪ NGƯỜI DÙNG</span>
-          <div class="response-answer">
-            ✅ Cảm ơn bạn! Hệ thống đã cập nhật lại ngữ cảnh theo yêu cầu của bạn (Loại: <strong>${type.toUpperCase()}</strong>).
-            ${notes ? `<br><em>Ghi chú: "${notes}" đã được gửi tới đội ngũ TA để rà soát.</em>` : ''}
-          </div>
-        </div>
-      `);
-    }
+function respondLabDeadline(){
+  botBubble({
+    text: `Hạn nộp bài <b>Lab</b> trên VLearn là <b>23:59 cùng ngày học</b> (trừ khi Lab Coach có thông báo riêng theo ca).`,
+    badgeType: 'offline',
+    badgeLabel: '📘 HỌC VỤ OFFLINE — TRƯỜNG VINUNI',
+    citation: 'Ma trận quy chế — mục "Hạn nộp bài (Deadline)" (Hệ thống 1).'
+  });
+}
 
-    // Auto load scenario 1 on start
-    window.onload = () => loadScenario(1);
-  </script>
+function respondGateDeadline(){
+  botBubble({
+    text: `Deliverables của Gate (PRD, Wireframe...) nộp theo thông báo trên Phoenix — thường là <b>23:59 Chủ Nhật</b>, nhưng hãy chốt lại theo thông báo mới nhất của BTC.`,
+    badgeType: 'online',
+    badgeLabel: '🟣 BUILD PHASE ONLINE — DISCORD',
+    citation: 'Ma trận quy chế — mục "Hạn nộp bài (Deadline)" (Hệ thống 2).'
+  });
+}
+
+function respondFallback(){
+  botBubble({
+    text: `Mình chưa chắc câu hỏi này thuộc hệ thống nào. Bạn đang hỏi về:`,
+    badgeType: null,
+    chips: [
+      { label: '🏫 Buổi học trên lớp', value: 'offline' },
+      { label: '💻 Buổi Workshop online', value: 'online' }
+    ],
+    actions: false
+  });
+}
+
+// ===== CLASSIFIER =====
+function classifyAndRespond(raw){
+  const t = raw.toLowerCase();
+
+  const hasOffline = /(lớp|offline|vlearn|myvinuni|trường)/.test(t);
+  const hasOnline = /(online|workshop|zoom|discord|phoenix)/.test(t);
+
+  // Out of scope
+  if(/(sửa điểm danh|sửa giúp|xác nhận nghỉ|cho nghỉ|xin nghỉ.*giúp|khiếu nại)/.test(t)){
+    respondOutOfScope();
+    return;
+  }
+
+  // Daily standup specific
+  if(/standup/.test(t)){
+    respondStandupVsAttendance();
+    return;
+  }
+
+  // Explicit attendance history / happy path
+  if(/(lịch sử điểm danh|xem điểm danh|điểm danh.*xem ở đâu)/.test(t)){
+    respondHappyPathAttendance();
+    return;
+  }
+
+  // Ambiguous absence question (no offline/online qualifier)
+  if(/(vắng|nghỉ học|nghỉ có)/.test(t) && !hasOffline && !hasOnline){
+    respondAmbiguousAbsence();
+    return;
+  }
+  if(/vắng/.test(t) && hasOffline){ respondOfflineAttendance(); return; }
+  if(/vắng/.test(t) && hasOnline){ respondOnlineWorkshop(); return; }
+
+  // XP / rank / leaderboard
+  if(/(xp|rank|leaderboard|bảng xếp hạng)/.test(t)){
+    respondXP();
+    return;
+  }
+
+  // Deadlines
+  if(/(deadline|hạn nộp)/.test(t)){
+    if(/(gate|prd|wireframe|phoenix)/.test(t)) respondGateDeadline();
+    else if(/lab/.test(t)) respondLabDeadline();
+    else respondFallback();
+    return;
+  }
+  if(/lab/.test(t)){ respondLabDeadline(); return; }
+
+  // Generic attendance/chuyên cần mention
+  if(/(điểm danh|chuyên cần)/.test(t)){
+    if(hasOffline) respondOfflineAttendance();
+    else if(hasOnline) respondOnlineWorkshop();
+    else respondAmbiguousAbsence();
+    return;
+  }
+
+  respondFallback();
+}
+
+function routeAfterTyping(text){
+  typingIndicator();
+  setTimeout(()=>{
+    removeTyping();
+    classifyAndRespond(text);
+  }, 750 + Math.random()*400);
+}
+
+function handleSend(){
+  const input = document.getElementById('chatInput');
+  const val = input.value.trim();
+  if(!val) return;
+  userBubble(val);
+  input.value = '';
+  routeAfterTyping(val);
+}
+
+function sendPreset(emoji, text){
+  userBubble(text);
+  routeAfterTyping(text);
+}
+
+// ===== MODAL =====
+function openModal(){ document.getElementById('emailModal').classList.remove('hidden'); document.getElementById('emailModal').classList.add('flex'); }
+function closeModal(){ document.getElementById('emailModal').classList.add('hidden'); document.getElementById('emailModal').classList.remove('flex'); }
+function copyEmail(){
+  const text = document.getElementById('emailContent').innerText;
+  navigator.clipboard.writeText(text).then(()=>{
+    const btn = document.getElementById('copyBtn');
+    const old = btn.textContent;
+    btn.textContent = '✓ Đã sao chép!';
+    setTimeout(()=> btn.textContent = old, 1500);
+  }).catch(()=>{});
+}
+function showTicketCmd(){
+  const div = document.createElement('div');
+  div.className = 'msg-enter flex gap-3';
+  div.innerHTML = `
+    <div class="w-9 h-9 rounded-full bg-[#23a55a] flex items-center justify-center text-xs font-bold text-white shrink-0">TL</div>
+    <div class="min-w-0 max-w-[560px]">
+      <div class="flex items-baseline gap-2">
+        <span class="text-sm font-semibold text-[var(--text-bright)]">Trợ lý Quy chế</span>
+        <span class="text-[9px] bg-[var(--blurple)] text-white px-1 rounded font-semibold">BOT</span>
+        <span class="text-[10px] text-[var(--text-muted)]">${timeNow()}</span>
+      </div>
+      <div class="text-sm text-[var(--text-normal)] mt-1">
+        Gõ lệnh sau vào bất kỳ kênh nào để mở ticket cho Mod/BTC hỗ trợ:
+        <div class="citebox rounded px-3 py-2 mt-2 text-xs"><code class="text-[var(--text-bright)]">/ticket create</code></div>
+      </div>
+    </div>`;
+  chatScroll.appendChild(div);
+  scrollDown();
+}
+
+// ===== INIT / WELCOME =====
+window.onload = function(){
+  botBubble({
+    text: `Xin chào 👋 Mình là <b>Trợ lý Quy chế</b> — chuyên giải đáp câu hỏi về <b>điểm danh, hạn nộp, điểm số, chuyên cần</b>.<br><br>
+      Mình phân định rạch ròi giữa <b>📘 Học trên lớp (Offline – VinUni/VLearn)</b> và <b>🟣 Build Phase (Online – Discord/Phoenix)</b> — đây là hai hệ thống <b>hoàn toàn độc lập</b>.<br><br>
+      ⚠️ Mình <b>không có thẩm quyền</b> sửa điểm danh hoặc xác nhận nghỉ học thay trường — với các việc này mình sẽ chỉ đường cho bạn đến đúng nơi (email học vụ hoặc ticket Discord).`,
+    badgeType: null,
+    actions: false
+  });
+};
+</script>
 </body>
 </html>
-
