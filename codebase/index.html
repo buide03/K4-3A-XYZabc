@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CP2 Interactive Prototype — Trợ lý Quy chế & Deadline Khóa 4</title>
+  <style>
+    :root {
+      --bg-primary: #313338;
+      --bg-secondary: #2b2d31;
+      --bg-tertiary: #1e1f22;
+      --accent-color: #5865f2;
+      --accent-hover: #4752c4;
+      --text-normal: #dbdee1;
+      --text-muted: #949ba4;
+      --text-link: #00a8fc;
+      --interactive-hover: #35373c;
+      --border-color: #3f4147;
+      --success-green: #23a55a;
+      --warning-amber: #f0b232;
+      --danger-red: #f23f43;
+      --badge-hax: #eb459e;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background: var(--bg-tertiary);
+      color: var(--text-normal);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Top Evaluation / Scenario Banner */
+    .top-toolbar {
+      background: #111214;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid #232428;
+      font-size: 13px;
+      z-index: 100;
+    }
+
+    .top-toolbar .title-area {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .status-badge {
+      background: rgba(88, 101, 242, 0.2);
+      color: #5865f2;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+
+    .scenario-buttons {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .scenario-btn {
+      background: #2b2d31;
+      color: var(--text-normal);
+      border: 1px solid var(--border-color);
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .scenario-btn:hover {
+      background: var(--interactive-hover);
+      border-color: #5865f2;
+      color: #fff;
+    }
+
+    .scenario-btn.active {
+      background: var(--accent-color);
+      border-color: var(--accent-color);
+      color: #fff;
+    }
+
+    .btn-reset {
+      background: transparent;
+      border: 1px dashed var(--text-muted);
+      color: var(--text-muted);
+    }
+    .btn-reset:hover {
+      border-color: var(--danger-red);
+      color: var(--danger-red);
+    }
+
+    /* App Container */
+    .app-container {
+      display: flex;
+      flex: 1;
+      height: calc(100vh - 48px);
+      overflow: hidden;
+    }
+
+    /* Left Channels Sidebar */
+    .channels-sidebar {
+      width: 240px;
+      background: var(--bg-secondary);
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid #202225;
+    }
+
+    .server-header {
+      height: 48px;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      font-weight: 700;
+      font-size: 14px;
+      border-bottom: 1px solid #1f2023;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    }
+
+    .channel-category {
+      padding: 16px 12px 6px 16px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .channel-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      margin: 2px 8px;
+      border-radius: 4px;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 14px;
+      text-decoration: none;
+    }
+
+    .channel-item:hover {
+      background: var(--interactive-hover);
+      color: var(--text-normal);
+    }
+
+    .channel-item.active {
+      background: #35373c;
+      color: #fff;
+      font-weight: 500;
+    }
+
+    .channel-icon {
+      color: #80848e;
+      font-size: 16px;
+    }
+
+    .user-profile-bar {
+      margin-top: auto;
+      background: #232428;
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .avatar-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #5865f2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: white;
+      font-size: 13px;
+    }
+
+    .user-details {
+      display: flex;
+      flex-direction: column;
+      font-size: 12px;
+    }
+    .user-name { font-weight: 600; color: #fff; }
+    .user-status { color: var(--text-muted); font-size: 10px; }
+
+    /* Main Chat Area */
+    .chat-area {
+      flex: 1;
+      background: var(--bg-primary);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .chat-header {
+      height: 48px;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+
+    .chat-header-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    .chat-header-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      border-left: 1px solid var(--border-color);
+      padding-left: 10px;
+      margin-left: 10px;
+      font-weight: normal;
+    }
+
+    /* Messages Container */
+    .messages-container {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Message Item */
+    .message {
+      display: flex;
+      gap: 14px;
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    .message .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #fff;
+    }
+    .avatar.user-avatar { background: #5865f2; }
+    .avatar.bot-avatar { background: #23a55a; }
+
+    .message-content-wrapper {
+      flex: 1;
+    }
+
+    .message-header {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .author-name {
+      font-weight: 600;
+      color: #fff;
+      font-size: 14px;
+    }
+
+    .bot-tag {
+      background: var(--accent-color);
+      color: #fff;
+      font-size: 10px;
+      padding: 1px 4px;
+      border-radius: 3px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .timestamp {
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+
+    .message-text {
+      color: var(--text-normal);
+      font-size: 14px;
+    }
+
+    /* Welcome / HAX G1 Banner */
+    .welcome-card {
+      background: #2b2d31;
+      border-left: 4px solid var(--accent-color);
+      border-radius: 6px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+
+    .hax-badge {
+      display: inline-block;
+      background: rgba(235, 69, 158, 0.2);
+      color: #f47fff;
+      border: 1px solid rgba(235, 69, 158, 0.4);
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 10px;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+
+    .welcome-card h4 {
+      color: #fff;
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+
+    .welcome-card p {
+      color: var(--text-muted);
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .quick-chips-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .chip-btn {
+      background: #35373c;
+      border: 1px solid var(--border-color);
+      color: var(--text-normal);
+      padding: 5px 10px;
+      border-radius: 14px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .chip-btn:hover {
+      background: var(--accent-color);
+      color: #fff;
+      border-color: var(--accent-color);
+    }
+
+    /* Response Card / Citations */
+    .bot-response-card {
+      background: #2b2d31;
+      border-radius: 6px;
+      padding: 12px 14px;
+      margin-top: 6px;
+      border: 1px solid var(--border-color);
+    }
+
+    .response-answer {
+      font-size: 14px;
+      color: #fff;
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    .citation-box {
+      background: #1e1f22;
+      border-left: 3px solid var(--success-green);
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .citation-box strong {
+      color: #a6d3a0;
+    }
+
+    .action-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-top: 6px;
+      border-top: 1px solid #35373c;
+      font-size: 12px;
+    }
+
+    .feedback-btn {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 4px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s;
+    }
+    .feedback-btn:hover {
+      background: var(--interactive-hover);
+      color: #fff;
+    }
+    .feedback-btn.correct-btn:hover {
+      color: var(--danger-red);
+      border-color: var(--danger-red);
+    }
+
+    /* Fallback / Failure Box */
+    .fallback-card {
+      background: rgba(242, 63, 67, 0.1);
+      border-left: 4px solid var(--danger-red);
+      padding: 12px 14px;
+      border-radius: 6px;
+      margin-top: 6px;
+    }
+
+    .btn-ticket {
+      background: var(--danger-red);
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 12px;
+      cursor: pointer;
+      margin-top: 8px;
+      display: inline-block;
+    }
+
+    /* Chat Input Bar */
+    .chat-input-area {
+      padding: 14px 20px;
+      background: var(--bg-primary);
+    }
+
+    .chat-input-wrapper {
+      background: #383a40;
+      border-radius: 8px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .chat-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 14px;
+      outline: none;
+    }
+    .chat-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .send-btn {
+      background: var(--accent-color);
+      color: #fff;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    /* Correction Modal */
+    .modal-backdrop {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+    }
+    .modal-card {
+      background: #313338;
+      width: 440px;
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+    }
+    .modal-header {
+      padding: 16px 20px;
+      background: #2b2d31;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .modal-header h3 {
+      font-size: 16px;
+      color: #fff;
+    }
+    .modal-body {
+      padding: 20px;
+      font-size: 13px;
+    }
+    .modal-body label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: var(--text-normal);
+    }
+    .modal-body select, .modal-body textarea {
+      width: 100%;
+      background: #1e1f22;
+      border: 1px solid var(--border-color);
+      color: #fff;
+      padding: 8px 10px;
+      border-radius: 4px;
+      margin-bottom: 14px;
+      outline: none;
+      font-size: 13px;
+    }
+    .modal-footer {
+      padding: 12px 20px;
+      background: #2b2d31;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Scenario Switcher (CP2 Quick Testing Bar) -->
+  <div class="top-toolbar">
+    <div class="title-area">
+      <span class="status-badge">CP2 Prototype · Mock</span>
+      <strong>Khóa 4 · Lớp 3A · Track B: Trợ lý Quy chế & Deadline</strong>
+    </div>
+    <div class="scenario-buttons">
+      <span style="color: var(--text-muted); font-size: 12px; margin-right: 4px;">Kịch bản kiểm thử:</span>
+      <button class="scenario-btn active" onclick="loadScenario(1)">1. Happy Path</button>
+      <button class="scenario-btn" onclick="loadScenario(2)">2. Low-Confidence</button>
+      <button class="scenario-btn" onclick="loadScenario(3)">3. Failure / No-Grounding</button>
+      <button class="scenario-btn" onclick="loadScenario(4)">4. Correction (Sửa sai)</button>
+      <button class="scenario-btn btn-reset" onclick="resetChat()">↺ Reset</button>
+    </div>
+  </div>
+
+  <div class="app-container">
+    <!-- Left Discord Sidebar -->
+    <div class="channels-sidebar">
+      <div class="server-header">Mini Hackathon AI · B04</div>
+      <div class="channel-category">Kênh Tra cứu & Hỗ trợ</div>
+      <div class="channel-item">
+        <span class="channel-icon">📢</span> thông-báo-chung
+      </div>
+      <div class="channel-item active">
+        <span class="channel-icon">🤖</span> hỏi-trợ-lý-kute
+      </div>
+      <div class="channel-item">
+        <span class="channel-icon">❓</span> hoi-tro-giang-e403
+      </div>
+      <div class="channel-item">
+        <span class="channel-icon">💬</span> tán-gẫu
+      </div>
+
+      <div class="user-profile-bar">
+        <div class="avatar-circle">H</div>
+        <div class="user-details">
+          <span class="user-name">Học viên 3A</span>
+          <span class="user-status">#2A2026xxxx · Online</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Discord Chat Area -->
+    <div class="chat-area">
+      <div class="chat-header">
+        <div class="chat-header-info">
+          <span class="channel-icon">🤖</span>
+          <span>hỏi-trợ-lý-kute</span>
+          <span class="chat-header-desc">Kênh tra cứu tự động mốc hạn bài tập & quy chế học vụ Khóa 4</span>
+        </div>
+      </div>
+
+      <!-- Messages Stream -->
+      <div class="messages-container" id="messagesContainer">
+        <!-- Default Welcome / HAX G1 Banner -->
+        <div class="welcome-card">
+          <span class="hax-badge">HAX G1 · NĂNG LỰC & PHẠM VI HỆ THỐNG</span>
+          <h4>👋 Xin chào học viên! Tôi là Trợ lý Quy chế & Lịch nộp bài Khóa 4</h4>
+          <p>Tôi hỗ trợ tra cứu chính xác: <strong>Hạn nộp bài Lab, Báo cáo Daily Standup, Workshop và Quy chế điểm danh</strong>. Tránh hỏi các câu chuyện ngoài lề.</p>
+          <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 4px;">Câu hỏi mẫu hay gặp:</div>
+          <div class="quick-chips-wrapper">
+            <button class="chip-btn" onclick="sendQuickQuery('Hạn nộp bài Lab 02 là khi nào?')">📅 Hạn nộp bài Lab 02</button>
+            <button class="chip-btn" onclick="sendQuickQuery('Nộp muộn Daily Standup bị trừ mấy điểm?')">⏰ Quy chế nộp Daily muộn</button>
+            <button class="chip-btn" onclick="sendQuickQuery('Hôm nay phải nộp những bài gì?')">❓ Hôm nay nộp bài gì?</button>
+            <button class="chip-btn" onclick="sendQuickQuery('Thầy dạy học thích uống trà sữa gì?')">☕ Thầy thích uống gì? (Ngoài lề)</button>
+          </div>
+        </div>
+
+        <div id="dynamicMessages"></div>
+      </div>
+
+      <!-- Chat Input Field -->
+      <div class="chat-input-area">
+        <div class="chat-input-wrapper">
+          <input type="text" id="userInput" class="chat-input" placeholder="Gõ câu hỏi về quy chế hoặc chọn kịch bản phía trên..." onkeydown="handleKey(event)">
+          <button class="send-btn" onclick="handleSend()">Gửi</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Correction (HAX G9) -->
+  <div class="modal-backdrop" id="correctionModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><span class="hax-badge">HAX G9</span> Báo sai / Sửa đổi ngữ cảnh</h3>
+        <button onclick="closeModal()" style="background:transparent; border:none; color:var(--text-muted); font-size:18px; cursor:pointer;">✕</button>
+      </div>
+      <div class="modal-body">
+        <label>1. Bot đã hiểu nhầm loại nhiệm vụ nào?</label>
+        <select id="correctType">
+          <option value="daily">Hiểu nhầm sang: Báo cáo Daily Standup (10:00 AM)</option>
+          <option value="lab" selected>Hiểu nhầm sang: Bài tập Lab thực hành (23:59 PM)</option>
+          <option value="workshop">Hiểu nhầm sang: Workshop cuối tuần</option>
+          <option value="quiz">Hiểu nhầm sang: Bài kiểm tra Quiz</option>
+        </select>
+
+        <label>2. Góp ý / Báo sai cụ thể:</label>
+        <textarea id="correctNotes" rows="3" placeholder="VD: Lịch Lab 02 đã được Lab Coach dời sang 12h trưa mai, bot vẫn báo 24h đêm nay..."></textarea>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="closeModal()">Hủy</button>
+        <button class="send-btn" onclick="submitCorrection()">Lưu & Cập nhật kết quả</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const dynamicMessages = document.getElementById('dynamicMessages');
+    const messagesContainer = document.getElementById('messagesContainer');
+    const userInput = document.getElementById('userInput');
+    const correctionModal = document.getElementById('correctionModal');
+
+    function scrollToBottom() {
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    function resetChat() {
+      dynamicMessages.innerHTML = '';
+      document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active'));
+    }
+
+    function appendUserMessage(text) {
+      const msgDiv = document.createElement('div');
+      msgDiv.className = 'message';
+      msgDiv.innerHTML = `
+        <div class="avatar user-avatar">H</div>
+        <div class="message-content-wrapper">
+          <div class="message-header">
+            <span class="author-name">Học viên 3A</span>
+            <span class="timestamp">Vừa xong</span>
+          </div>
+          <div class="message-text">${text}</div>
+        </div>
+      `;
+      dynamicMessages.appendChild(msgDiv);
+      scrollToBottom();
+    }
+
+    function appendBotMessage(contentHtml) {
+      const msgDiv = document.createElement('div');
+      msgDiv.className = 'message';
+      msgDiv.innerHTML = `
+        <div class="avatar bot-avatar">🤖</div>
+        <div class="message-content-wrapper">
+          <div class="message-header">
+            <span class="author-name">Trợ lý Quy chế</span>
+            <span class="bot-tag">BOT</span>
+            <span class="timestamp">Vừa xong</span>
+          </div>
+          ${contentHtml}
+        </div>
+      `;
+      dynamicMessages.appendChild(msgDiv);
+      scrollToBottom();
+    }
+
+    function loadScenario(scenarioNumber) {
+      resetChat();
+      document.querySelectorAll('.scenario-btn').forEach((b, idx) => {
+        if (idx === scenarioNumber - 1) b.classList.add('active');
+      });
+
+      if (scenarioNumber === 1) {
+        // SCENARIO 1: HAPPY PATH (HIGH CONFIDENCE)
+        appendUserMessage("Hạn nộp bài Lab 02 là khi nào vậy bot?");
+        setTimeout(() => {
+          appendBotMessage(`
+            <div class="bot-response-card">
+              <span class="hax-badge">HAX G2 · NGUỒN CĂN CỨ XÁC THỰC (CONFIDENCE: 98%)</span>
+              <div class="response-answer">
+                Hạn chót nộp bài <strong>Lab 02</strong> là <strong>23:59 ngày 16/09/2026</strong>.
+                <br>• Lưu ý: Nộp bài qua đường dẫn repo GitHub nộp bài của nhóm.
+              </div>
+              <div class="citation-box">
+                📖 <strong>Nguồn trích dẫn:</strong> Sổ tay Học vụ Khóa 4 · Mục 3.1 Quy định thời hạn nộp bài Lab (Cập nhật 15/09).
+              </div>
+              <div class="action-row">
+                <span>Câu trả lời có chính xác không?</span>
+                <button class="feedback-btn" onclick="alert('Cảm ơn bạn đã xác nhận!')">👍 Hữu ích</button>
+                <button class="feedback-btn correct-btn" onclick="openModal()">👎 Báo sai / Sửa ngữ cảnh</button>
+              </div>
+            </div>
+          `);
+        }, 300);
+      } else if (scenarioNumber === 2) {
+        // SCENARIO 2: LOW CONFIDENCE (DISAMBIGUATION)
+        appendUserMessage("Hôm nay phải nộp những bài gì vậy bot?");
+        setTimeout(() => {
+          appendBotMessage(`
+            <div class="bot-response-card">
+              <span class="hax-badge" style="background: rgba(240, 178, 50, 0.2); color: #f0b232; border-color: rgba(240, 178, 50, 0.4);">
+                KỊCH BẢN 2: ĐỘ TỰ TIN TRUNG BÌNH · MƠ HỒ NGỮ CẢNH
+              </span>
+              <div class="response-answer">
+                Hôm nay (16/09) có <strong>2 mốc nộp bài</strong> với quy chế khác nhau. Bạn đang muốn tra cứu loại bài nào?
+              </div>
+              <div class="quick-chips-wrapper" style="margin-top: 6px;">
+                <button class="chip-btn" onclick="selectDisambiguation('daily')">
+                  ☀️ 1. Báo cáo Daily Standup (Hạn 10:00 sáng)
+                </button>
+                <button class="chip-btn" onclick="selectDisambiguation('lab')">
+                  💻 2. Bài tập Lab 02 (Hạn 23:59 đêm)
+                </button>
+              </div>
+            </div>
+          `);
+        }, 300);
+      } else if (scenarioNumber === 3) {
+        // SCENARIO 3: FAILURE / NO-GROUNDING (OUT OF SCOPE)
+        appendUserMessage("Thầy giáo thích uống trà sữa loại gì?");
+        setTimeout(() => {
+          appendBotMessage(`
+            <div class="fallback-card">
+              <span class="hax-badge">HAX G10 · THOÁI LUI NHÃ NHẶN (KHÔNG BỊA ĐẶT)</span>
+              <div style="color: #fff; font-weight: 600; margin-bottom: 4px;">
+                ⚠️ Không tìm thấy căn cứ thông tin trong tài liệu
+              </div>
+              <div style="font-size: 13px; color: var(--text-normal); margin-bottom: 8px;">
+                Hệ thống chỉ hỗ trợ giải đáp <strong>quy chế, deadline và tiêu chí học vụ</strong> của Khóa 4. Câu hỏi của bạn nằm ngoài phạm vi hoặc không có trong quy chế chính thức.
+              </div>
+              <div style="font-size: 12px; color: var(--text-muted);">
+                Nếu đây là thắc mắc cần trợ giúp gấp về việc học tập, bạn hãy liên hệ trực tiếp với Trợ giảng:
+              </div>
+              <button class="btn-ticket" onclick="alert('Đã gửi thông báo tới kênh #hoi-tro-giang-e403! Trợ giảng sẽ phản hồi bạn trong 10 phút.')">
+                🎫 Tạo yêu cầu hỗ trợ tới Trợ giảng (TA)
+              </button>
+            </div>
+          `);
+        }, 300);
+      } else if (scenarioNumber === 4) {
+        // SCENARIO 4: CORRECTION
+        loadScenario(1);
+        setTimeout(() => {
+          openModal();
+        }, 600);
+      }
+    }
+
+    function selectDisambiguation(type) {
+      if (type === 'daily') {
+        appendUserMessage("Tôi muốn hỏi về: Báo cáo Daily Standup");
+        setTimeout(() => {
+          appendBotMessage(`
+            <div class="bot-response-card">
+              <span class="hax-badge">HAX G2 · ĐÃ XÁC ĐỊNH NGỮ CẢNH: DAILY STANDUP</span>
+              <div class="response-answer">
+                Hạn nộp <strong>Báo cáo Daily Standup</strong> hôm nay là <strong>10:00 sáng</strong>.
+                <br>• Lưu ý: Nộp muộn sau 10:00 vẫn được ghi nhận điểm danh nhưng <strong>không được cộng điểm chuyên cần (+XP)</strong>.
+              </div>
+              <div class="citation-box">
+                📖 <strong>Nguồn:</strong> Quy chế hoạt động nhóm & Daily Standup Khoá 4.
+              </div>
+            </div>
+          `);
+        }, 300);
+      } else {
+        appendUserMessage("Tôi muốn hỏi về: Bài tập Lab 02");
+        setTimeout(() => {
+          appendBotMessage(`
+            <div class="bot-response-card">
+              <span class="hax-badge">HAX G2 · ĐÃ XÁC ĐỊNH NGỮ CẢNH: BÀI TẬP LAB</span>
+              <div class="response-answer">
+                Hạn nộp <strong>Bài tập Lab 02</strong> là <strong>23:59 ngày 16/09/2026</strong>.
+                <br>• Lưu ý: Nộp muộn sau 23:59 sẽ bị trừ 50% số điểm bài Lab, sau 12h trưa hôm sau nhận 0 điểm.
+              </div>
+              <div class="citation-box">
+                📖 <strong>Nguồn:</strong> Quy chế chấm điểm Lab · Điều 2.4.
+              </div>
+            </div>
+          `);
+        }, 300);
+      }
+    }
+
+    function sendQuickQuery(text) {
+      userInput.value = text;
+      handleSend();
+    }
+
+    function handleKey(e) {
+      if (e.key === 'Enter') handleSend();
+    }
+
+    function handleSend() {
+      const val = userInput.value.trim();
+      if (!val) return;
+      appendUserMessage(val);
+      userInput.value = '';
+
+      const lower = val.toLowerCase();
+      setTimeout(() => {
+        if (lower.includes('thích') || lower.includes('uống') || lower.includes('tán gẫu')) {
+          loadScenario(3);
+        } else if (lower.includes('hôm nay') && !lower.includes('lab') && !lower.includes('daily')) {
+          loadScenario(2);
+        } else if (lower.includes('daily') || lower.includes('standup')) {
+          selectDisambiguation('daily');
+        } else {
+          loadScenario(1);
+        }
+      }, 400);
+    }
+
+    function openModal() {
+      correctionModal.style.display = 'flex';
+    }
+    function closeModal() {
+      correctionModal.style.display = 'none';
+    }
+
+    function submitCorrection() {
+      const type = document.getElementById('correctType').value;
+      const notes = document.getElementById('correctNotes').value;
+      closeModal();
+
+      appendBotMessage(`
+        <div class="bot-response-card" style="border-left: 4px solid var(--badge-hax);">
+          <span class="hax-badge">HAX G9 · ĐÃ GHI NHẬN ĐIỀU CHỈNH TỪ NGƯỜI DÙNG</span>
+          <div class="response-answer">
+            ✅ Cảm ơn bạn! Hệ thống đã cập nhật lại ngữ cảnh theo yêu cầu của bạn (Loại: <strong>${type.toUpperCase()}</strong>).
+            ${notes ? `<br><em>Ghi chú: "${notes}" đã được gửi tới đội ngũ TA để rà soát.</em>` : ''}
+          </div>
+        </div>
+      `);
+    }
+
+    // Auto load scenario 1 on start
+    window.onload = () => loadScenario(1);
+  </script>
+</body>
+</html>
+
