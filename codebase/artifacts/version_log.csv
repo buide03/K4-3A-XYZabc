@@ -1,0 +1,8 @@
+version,timestamp,prompt_hash,tools_hash,pass_rate,notes
+v0,2026-09-17T10:19:32,p74979d30,t0d408aa3,10.0%,Baseline sơ khai CP3 - Mô hình gpt-4o-mini chưa có grounding bịa quy chế (2/20 PASS)
+v1,2026-09-17T10:24:43,p703570c5,t0d408aa3,95.0%,Cải tiến v1 CP3 - Nhúng Ma trận Quy chế Khóa 4 vào System Prompt (19/20 PASS)
+adv1,2026-09-17T14:07:16,p3ed0d221,t0d408aa3,40.0%,Chạy openrouter (2/5 PASS)
+v2,2026-09-17T14:14:10,p483e37da,t0d408aa3,95.0%,Chạy eval_base (19/20 PASS)
+v2_adv,2026-09-17T14:14:41,p483e37da,t0d408aa3,90.0%,Chạy eval_adversarial (9/10 PASS)
+v2,2026-09-17T14:26:51,p483e37da,t0d408aa3,100.0%,Chạy eval_base (20/20 PASS)
+v2_adv,2026-09-17T14:27:25,p483e37da,t0d408aa3,90.0%,Chạy eval_adversarial (9/10 PASS)

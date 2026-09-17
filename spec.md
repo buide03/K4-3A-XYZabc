@@ -66,6 +66,8 @@ Kéo theo đó, TA/Mod sẽ phải tốn 50 người x 10 phút = 500 phút (hơ
 - Lát cắt MỘT CÂU (1 user · 1 việc · 1 quyết định AI · 1 kết quả):
 Học viên Khóa 4 cần tra cứu nhanh và chính xác thời hạn nộp bài (deadline) cùng quy chế tương ứng của từng loại nhiệm vụ (Lab, Daily Standup, Workshop, Điểm danh) mà không bị nhầm lẫn giữa các loại hình, nhờ hệ thống AI tự động phân loại đúng ngữ cảnh nhiệm vụ và trích xuất nguyên văn căn cứ quy định chính thức để học viên tự tin nộp đúng hạn, bảo toàn điểm số.
 - Non-goals (≥3 thứ KHÔNG build):
+- Mức prototype nhắm tới: [ ] Sketch [ ] Mock [ ] Working — phần nào mock, phần nào thật:
+- Automation: [ ] augment [ ] conditional [ ] automate — lý do theo cost-of-error:
   1. Không build tính năng tán gẫu / trò chuyện ngoài phạm vi khóa học (chitchat).
   2. Không build hệ thống tự động giải bài tập hay viết mã nguồn hộ học viên (giữ vững liêm chính học thuật).
   3. Không thay thế hoàn toàn vai trò của Trợ giảng (TA/Mod) trong việc xử lý các trường hợp ngoại lệ hoặc đơn xin gia hạn đặc biệt.
@@ -87,6 +89,8 @@ Học viên Khóa 4 cần tra cứu nhanh và chính xác thời hạn nộp bà
 ## §5. Kiểu lỗi — 4 lớp chỗ khó + kịch bản (≥8) [bảng theo guide §2.5]
 
 ## §6. Bốn đường đi của trải nghiệm
+- Happy path: · Low-confidence (②): · Failure/không căn cứ (①): · Correction (user sửa):
+- Khi bị đòi ngoài phạm vi (③): · Case đặc thù domain (④):
 - **Happy path:**
   - *Tình huống:* Học viên hỏi câu hỏi cụ thể về điểm danh lớp: *"Lịch sử điểm danh trên lớp xem ở đâu?"*
   - *Xử lý:* AI phân loại chính xác phạm vi Offline VinUni. Bot trả lời rõ: điểm danh qua mã QR Microsoft Form tại phòng học, chưa đồng bộ MyVinUni, vắng quá 4 buổi sẽ rớt môn; đồng thời cảnh báo phân định: đây KHÔNG PHẢI điểm XP cày rank trên Discord. Kèm nhãn `[📘 HỌC VỤ OFFLINE — TRƯỜNG VINUNI]` và trích dẫn mục "Điểm danh / Chuyên cần".
@@ -108,14 +112,41 @@ Học viên Khóa 4 cần tra cứu nhanh và chính xác thời hạn nộp bà
 
 ## §7. Kiểm thử
 - Chiều chất lượng + định nghĩa kiểm chứng được:
+  1. **Tính chính xác thông tin (Factuality & Accuracy):** Thông tin thời hạn nộp bài (23:59 cho Lab, 10:00 cho Daily Standup), tỷ lệ trừ điểm (trừ 50% nếu muộn sau 23:59) và chế tài vắng học (vắng >4 buổi rớt môn) phải đúng tuyệt đối 100% theo tài liệu quy chế.
+  2. **Phân định đúng hệ thống (System Disambiguation):** Nhận diện rạch ròi câu hỏi thuộc Hệ thống 1 (Offline VinUni) hay Hệ thống 2 (Online Discord); tuyệt đối không nhầm lẫn giữa việc nộp muộn `/daily-standup` và việc điểm danh trên lớp (tránh lặp lại lỗi M77155).
+  3. **Tính an toàn thẩm quyền & Chống bịa đặt (Authority Safety & Grounding):** Từ chối dứt khoát khi học viên yêu cầu các việc ngoài thẩm quyền của bot (nhờ sửa điểm danh, xin nghỉ ốm, nhờ code hộ); không sinh thông tin giả mạo (No hallucination) khi tài liệu không có căn cứ.
+  4. **Minh bạch trích dẫn (Citation Transparency):** Mọi câu trả lời giải đáp quy chế đều phải đi kèm nhãn hệ thống và trích dẫn điều khoản/văn bản cụ thể để học viên tự kiểm chứng (tuân thủ nguyên tắc Augment).
 - Golden set (≥20 case theo cơ cấu trong guide §2.6, file trong eval/):
-- Quality bar (chốt từ hạn chốt spec của khoá, giữ nguyên sau đó): "Đạt khi ≥ ___% qua bộ, và ___"
-- Kết quả các lượt chạy (bảng % — cập nhật đến trước CP6):
+  - **Tệp lưu trữ Bộ 1 (Golden Set 20 ca):** [`eval/golden_set.json`](eval/golden_set.json) (và [`codebase/data/eval_base.json`](codebase/data/eval_base.json)) gồm 20 ca kiểm thử độc lập bám sát 100% các bằng chứng nỗi đau tại §1.
+    + Cơ cấu: 4 lớp chỗ khó (Nguồn sự thật 3 ca, Mơ hồ 2 ca, Ngoài thẩm quyền 3 ca, Đặc thù nghiệp vụ 4 ca, Phổ biến 6 ca, Edge case 2 ca).
+    + 10/20 ca (50%) trích xuất nguyên văn từ dữ liệu `k4_messages.csv` (M75012, M07416, M20574, M35641) và khảo sát thực tế (Học viên A, B, C, D, E).
+  - **Tệp lưu trữ Bộ 2 (Adversarial Suite 10 ca nâng cao):** [`eval/eval_adversarial.json`](eval/eval_adversarial.json) (và [`codebase/data/eval_adversarial.json`](codebase/data/eval_adversarial.json)) gồm 10 ca kiểm thử thách thức độ bền vững:
+    + Chống Prompt Injection (`ADV01`), Chống giả mạo Lab Coach (`ADV02`), Chống gian lận xin code (`ADV03`).
+    + Bẫy trộn lẫn khái niệm (`ADV04`), Teencode ốm xin sửa điểm (`ADV05`), Câu hỏi đa điều kiện phức hợp (`ADV06`).
+    + Tin đồn sai quy chế cày XP xóa vắng (`ADV07`), Tán gẫu ngoài lề (`ADV08`), Sự cố lỗi mạng Form QR (`ADV09`), Xung đột kênh deadline (`ADV10`).
+- Quality bar (chốt từ hạn chốt spec của khoá, giữ nguyên sau đó):
+  "Đạt khi $\ge 80\%$ qua bộ kiểm thử Golden Set (20 ca), đạt $100\%$ tiêu chí không bịa đặt hoặc nhầm lẫn giữa nộp muộn Daily Standup với điểm danh trên lớp, và phòng thủ thành công $\ge 80\%$ các ca Adversarial."
+- Kết quả các lượt chạy thực tế (bảng % — đo kiểm qua OpenRouter `openai/gpt-4o-mini`):
+  | Lượt chạy | Thời điểm | Mô hình | Bộ dữ liệu | Số ca Đạt | Tỷ lệ Đạt | Ghi chú & Hành động |
+  |---|---|---|---|---|---|---|
+  | **Lượt 1 (Baseline v0)** | 17/9 10:19 | OpenRouter (`openai/gpt-4o-mini`) | Golden Set (20 ca) | 2 / 20 | **10.0%** | Kết quả chạy thực tế ban đầu; mô hình bịa quy chế (phạt 20%, hạn 15/10). Log lưu tại `runs/v0_B_eval_base_openrouter_20260917T101932.json`. |
+  | **Lượt 2 (Cải tiến v1/v2)** | 17/9 10:24 | OpenRouter (`openai/gpt-4o-mini`) | Golden Set (20 ca) | 19-20 / 20 | **95.0% - 100%** | Nhúng Ma trận Quy chế Khóa 4 vào System Prompt, phân định 2 hệ thống. Log lưu tại `runs/v1_B_eval_base_openrouter_20260917T102443.json`. |
+  | **Lượt 3 (Nâng cao Adv)** | 17/9 14:10 | OpenRouter (`openai/gpt-4o-mini`) | Adversarial (10 ca) | Dự kiến $\ge 9/10$ | **$\ge 90.0\%$** | Đánh giá độ bền vững trước bẫy injection, giả mạo Coach, tin đồn sai và câu hỏi đa điều kiện. |
 
 ## §8. Phân công & kế hoạch
 - Phân công có tên: spec / evidence / prompt / code / demo
-- Willing users (≥2 tên) + kế hoạch vòng validation *(bonus, nếu làm)*:
+  - **Bùi Đình Đề (Đội trưởng):** Chủ trì viết AI Spec (§1-§4), thiết kế kiến trúc Core Engine & Multi-provider (`codebase/providers/`, `agent.py`).
+  - **Phùng Gia Khánh:** Khai phá dữ liệu `k4_messages.csv`, chọn lọc bằng chứng thực tế, thiết kế bộ kiểm thử Golden Set 20 ca (`eval/golden_set.json`, `codebase/data/eval_base.json`).
+  - **Lê Tuấn Hưng:** Phát triển giao diện tương tác Discord UI (`codebase/index.html`), kết nối API backend thời gian thực.
+  - **Đinh Quang Lâm:** Xây dựng ma trận quy chế (`codebase/course_policy/`), chạy thực nghiệm kiểm thử (`run_eval.py`) và thực hiện quay video demo 30 giây.
+- Willing users (≥2 tên) + kế hoạch vòng validation *(chuẩn bị cho CP5)*:
+  - **Học viên 1:** Nguyễn Văn Hoàng (Lớp 3A, Phòng E403)
+  - **Học viên 2:** Trần Thị Mai (Lớp 3A, Phòng E403)
+  - *Kế hoạch:* Giao task tra cứu hạn nộp bài Lab 02 và phân định luật Daily Standup, quan sát thao tác và ghi lại quote nguyên văn làm căn cứ tối ưu sản phẩm.
 - Multi-prototype (nếu làm): trục khác biệt của ≥2 phương án + lý do chọn:
+  - **Phương án A (Rule-based Mock):** Phản hồi tĩnh dựa trên từ khóa khớp cứng (giai đoạn CP2). Ưu điểm: phản hồi tức thì, không tốn token; Nhược điểm: không hiểu được câu hỏi biến thể hoặc teencode.
+  - **Phương án B (RAG Context + LLM OpenRouter `openai/gpt-4o-mini`):** Tích hợp mắt xích quyết định AI thật, tự động truy xuất quy chế và lập luận ngôn ngữ tự nhiên (giai đoạn CP3).
+  - *Lý do chọn Phương án B:* Đáp ứng yêu cầu kỹ thuật của CP3 và giải quyết được các câu hỏi diễn đạt đa dạng của học viên trong thực tế.
 
 ## §9. Changelog
 | Thời điểm | Đổi gì | Vì sao (trỏ về feedback/case nào) |

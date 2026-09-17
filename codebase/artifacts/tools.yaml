@@ -1,0 +1,44 @@
+tools:
+  - name: clarify
+    description: "Yêu cầu học viên làm rõ ngữ cảnh khi câu hỏi mơ hồ giữa 2 hệ thống Offline VinUni và Online Discord."
+    parameters:
+      type: object
+      properties:
+        topic:
+          type: string
+          description: "Chủ đề mơ hồ (ví dụ: attendance, deadline, points)"
+        suggested_options:
+          type: array
+          items:
+            type: string
+          description: "Danh sách các lựa chọn gợi ý cho học viên (ví dụ: Buổi học trên lớp, Workshop online)"
+      required:
+        - topic
+        - suggested_options
+
+  - name: create_ticket
+    description: "Tạo ticket chuyển tiếp yêu cầu tới Trợ giảng (TA) khi câu hỏi vượt thẩm quyền của bot hoặc có xung đột lịch cần xác nhận khẩn cấp."
+    parameters:
+      type: object
+      properties:
+        issue_type:
+          type: string
+          enum: [schedule_conflict, attendance_appeal, exception_request, technical_issue]
+          description: "Phân loại vấn đề cần TA hỗ trợ"
+        summary:
+          type: string
+          description: "Tóm tắt ngắn gọn yêu cầu của học viên"
+      required:
+        - issue_type
+        - summary
+
+  - name: search_policy
+    description: "Tra cứu điều khoản cụ thể trong ma trận quy chế khóa học Khóa 4."
+    parameters:
+      type: object
+      properties:
+        query:
+          type: string
+          description: "Từ khóa tra cứu (ví dụ: lab_deadline, standup_penalty, qr_attendance)"
+      required:
+        - query

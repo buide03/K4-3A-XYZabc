@@ -1,0 +1,30 @@
+# Environment & Secrets
+.env
+*.env
+.env.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+
+# Logs & Traces (có thể chứa thông tin nhạy cảm)
+codebase/logs/
+*.log
+
+# Dữ liệu thô của BTC (Bảo vệ quyền riêng tư học viên theo quy chế CP3)
+k4_messages*
+raw_data/
+/data/
+*.csv
+!codebase/artifacts/version_log.csv
+
+# OS & IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+

@@ -1,0 +1,289 @@
+[
+  {
+    "id": "TC01",
+    "taxonomy_class": "4_domain_specific",
+    "is_real_data": true,
+    "source": "k4_messages.csv (M75012 / Bot M77155)",
+    "input": "nộp lab muộn trừ bao nhiêu điểm",
+    "expected_system": "Offline VinUni",
+    "expected_behavior": "Phải giải thích đúng quy chế phạt của bài Lab (trừ 50%, sau 12h trưa 0 điểm). Tuyệt đối KHÔNG nhầm sang luật nộp muộn daily standup sau 10h chỉ mất XP.",
+    "acceptance_criteria": [
+      "trừ 50%",
+      "12:00",
+      "Lab",
+      "không nhầm daily"
+    ]
+  },
+  {
+    "id": "TC02",
+    "taxonomy_class": "1_grounding",
+    "is_real_data": true,
+    "source": "k4_messages.csv (M07416 / Bot M28485)",
+    "input": "Hạn nộp Lab02",
+    "expected_system": "Offline VinUni",
+    "expected_behavior": "Trả lời chính xác hạn nộp bài Lab 02 là 23:59 cùng ngày học trên VLearn, không được từ chối vô cớ như bot cũ.",
+    "acceptance_criteria": [
+      "23:59",
+      "VLearn",
+      "cùng ngày"
+    ]
+  },
+  {
+    "id": "TC03",
+    "taxonomy_class": "2_ambiguity",
+    "is_real_data": true,
+    "source": "k4_messages.csv (M20574)",
+    "input": "muộn sau 23h59 thì thế nào",
+    "expected_system": "Offline VinUni",
+    "expected_behavior": "Giải thích rõ sau 23:59 bài Lab bị trừ 50% số điểm, sau 12:00 trưa hôm sau nhận 0 điểm, không đưa menu vòng lặp rồi từ chối trả lời.",
+    "acceptance_criteria": [
+      "trừ 50%",
+      "12:00",
+      "0 điểm"
+    ]
+  },
+  {
+    "id": "TC04",
+    "taxonomy_class": "3_out_of_scope",
+    "is_real_data": true,
+    "source": "k4_messages.csv (M35641 / Bot M25518)",
+    "input": "tớ muốn dùng tính năng branch protection trên github repo",
+    "expected_system": "Out-of-scope",
+    "expected_behavior": "Nhận diện đây là câu hỏi kỹ thuật git ngoài phạm vi quy chế học vụ. Hướng dẫn học viên hỏi tại kênh kỹ thuật hoặc lab coach, không chỉ sai sang kênh bot lệnh.",
+    "acceptance_criteria": [
+      "ngoài phạm vi quy chế",
+      "hỗ trợ kỹ thuật"
+    ]
+  },
+  {
+    "id": "TC05",
+    "taxonomy_class": "4_domain_specific",
+    "is_real_data": true,
+    "source": "Khảo sát trực tiếp (Học viên C)",
+    "input": "Nộp daily standup muộn có bị tính vắng học trên trường không?",
+    "expected_system": "Online Discord",
+    "expected_behavior": "Khẳng định rõ ràng KHÔNG bị tính vắng học trên lớp. Nộp muộn sau 10:00 chỉ mất điểm XP cày rank Discord. Hai hệ thống độc lập.",
+    "acceptance_criteria": [
+      "không bị tính vắng",
+      "không ảnh hưởng điểm danh",
+      "10:00",
+      "XP"
+    ]
+  },
+  {
+    "id": "TC06",
+    "taxonomy_class": "1_grounding",
+    "is_real_data": true,
+    "source": "Khảo sát trực tiếp (Học viên D)",
+    "input": "Lớp yêu cầu quét mã QR Microsoft Form điểm danh nhưng lên MyVinUni tìm lịch sử không thấy?",
+    "expected_system": "Offline VinUni",
+    "expected_behavior": "Giải thích dữ liệu điểm danh QR Form chưa đồng bộ lên app MyVinUni. Khuyên học viên lưu ảnh chụp màn hình xác nhận đã gửi Form để đối chiếu khi cần.",
+    "acceptance_criteria": [
+      "chưa đồng bộ",
+      "MyVinUni",
+      "Microsoft Form",
+      "chụp màn hình"
+    ]
+  },
+  {
+    "id": "TC07",
+    "taxonomy_class": "4_domain_specific",
+    "is_real_data": true,
+    "source": "Khảo sát trực tiếp (Học viên D)",
+    "input": "Nghỉ Workshop online có bị tính vào giới hạn vắng tối đa 4 buổi của trường không?",
+    "expected_system": "Online Discord",
+    "expected_behavior": "Khẳng định KHÔNG bị tính vào 4 buổi vắng của trường. Workshop online chỉ ảnh hưởng điểm XP cày rank Discord.",
+    "acceptance_criteria": [
+      "không tính vào 4 buổi",
+      "trường VinUni",
+      "XP",
+      "Zoom"
+    ]
+  },
+  {
+    "id": "TC08",
+    "taxonomy_class": "4_domain_specific",
+    "is_real_data": true,
+    "source": "Khảo sát trực tiếp (Học viên A)",
+    "input": "Deadline trên web ghi 23h59 nhưng Lab Coach thông báo dời sang 12h trưa mai thì tính thế nào?",
+    "expected_system": "Offline VinUni",
+    "expected_behavior": "Xác nhận xung đột lịch. Hướng dẫn liên hệ Trợ giảng (TA) để được xác nhận chính thức trên kênh #thông-báo, ưu tiên thông báo mới nhất của Coach.",
+    "acceptance_criteria": [
+      "xung đột",
+      "Trợ giảng",
+      "TA",
+      "thông báo của Coach"
+    ]
+  },
+  {
+    "id": "TC09",
+    "taxonomy_class": "3_out_of_scope",
+    "is_real_data": true,
+    "source": "Khảo sát trực tiếp (Học viên B)",
+    "input": "Hôm nay em xin nghỉ ốm, bot sửa điểm danh giúp em được không?",
+    "expected_system": "Out-of-scope",
+    "expected_behavior": "Từ chối vì bot không có thẩm quyền sửa điểm danh. Cung cấp email học vụ AIthucchien@vinuni.edu.vn và hướng dẫn mở ticket.",
+    "acceptance_criteria": [
+      "không có thẩm quyền",
+      "AIthucchien@vinuni.edu.vn",
+      "Lab Coach"
+    ]
+  },
+  {
+    "id": "TC10",
+    "taxonomy_class": "2_ambiguity",
+    "is_real_data": true,
+    "source": "Khảo sát trực tiếp (Học viên E)",
+    "input": "Hôm nay phải nộp những bài gì?",
+    "expected_system": "Both/Clarify",
+    "expected_behavior": "Phân biệt rõ 2 loại hạn trong ngày: Daily Standup (10:00 sáng trên Discord) và Bài Lab (23:59 đêm trên VLearn).",
+    "acceptance_criteria": [
+      "Daily Standup",
+      "10:00",
+      "Lab",
+      "23:59"
+    ]
+  },
+  {
+    "id": "TC11",
+    "taxonomy_class": "common",
+    "is_real_data": false,
+    "source": "Nhóm xây dựng (Tình huống hàng ngày)",
+    "input": "Hạn nộp báo cáo daily standup là mấy giờ?",
+    "expected_system": "Online Discord",
+    "expected_behavior": "Trả lời chính xác hạn nộp Daily Standup là 10:00 sáng từ thứ 2 đến thứ 6.",
+    "acceptance_criteria": [
+      "10:00",
+      "sáng",
+      "Daily Standup"
+    ]
+  },
+  {
+    "id": "TC12",
+    "taxonomy_class": "common",
+    "is_real_data": false,
+    "source": "Nhóm xây dựng (Tình huống hàng ngày)",
+    "input": "Vắng bao nhiêu buổi học trên lớp thì bị rớt môn?",
+    "expected_system": "Offline VinUni",
+    "expected_behavior": "Trả lời chính xác vắng quá 4 buổi học trên lớp sẽ bị rớt môn.",
+    "acceptance_criteria": [
+      "quá 4 buổi",
+      "rớt môn"
+    ]
+  },
+  {
+    "id": "TC13",
+    "taxonomy_class": "common",
+    "is_real_data": false,
+    "source": "Nhóm xây dựng (Tình huống hàng ngày)",
+    "input": "Điểm danh trên lớp bằng hình thức nào?",
+    "expected_system": "Offline VinUni",
+    "expected_behavior": "Giải thích hình thức quét mã QR Microsoft Form tại phòng học.",
+    "acceptance_criteria": [
+      "QR",
+      "Microsoft Form",
+      "phòng học"
+    ]
+  },
+  {
+    "id": "TC14",
+    "taxonomy_class": "common",
+    "is_real_data": false,
+    "source": "Nhóm xây dựng (Tình huống hàng ngày)",
+    "input": "Điểm XP cày rank Discord có cộng vào điểm tổng kết trên trường không?",
+    "expected_system": "Online Discord",
+    "expected_behavior": "Khẳng định điểm XP chỉ dùng cày rank thi đua Discord, không tính vào điểm học tập trên trường.",
+    "acceptance_criteria": [
+      "không",
+      "cày rank",
+      "Discord",
+      "không tính vào điểm"
+    ]
+  },
+  {
+    "id": "TC15",
+    "taxonomy_class": "common",
+    "is_real_data": false,
+    "source": "Nhóm xây dựng (Tình huống hàng ngày)",
+    "input": "Hạn nộp bài Lab thực hành trên VLearn là mấy giờ?",
+    "expected_system": "Offline VinUni",
+    "expected_behavior": "Trả lời chính xác 23:59 cùng ngày học.",
+    "acceptance_criteria": [
+      "23:59",
+      "VLearn",
+      "cùng ngày"
+    ]
+  },
+  {
+    "id": "TC16",
+    "taxonomy_class": "common",
+    "is_real_data": false,
+    "source": "Nhóm xây dựng (Tình huống hàng ngày)",
+    "input": "Làm thế nào để điểm danh buổi Workshop online?",
+    "expected_system": "Online Discord",
+    "expected_behavior": "Giải thích vào Zoom bằng đúng cú pháp tên chuẩn [MSSV_Họ Tên] để hệ thống ghi nhận tự động.",
+    "acceptance_criteria": [
+      "Zoom",
+      "cú pháp tên",
+      "tự động"
+    ]
+  },
+  {
+    "id": "TC17",
+    "taxonomy_class": "1_grounding",
+    "is_real_data": false,
+    "source": "Nhóm xây dựng (Chống bịa đặt)",
+    "input": "Khoá học có chính sách miễn học phí cho top 5 không?",
+    "expected_system": "Offline VinUni",
+    "expected_behavior": "Thông báo không tìm thấy thông tin này trong tài liệu quy chế chính thức, khuyên hỏi ban tổ chức, không được tự ý bịa đặt.",
+    "acceptance_criteria": [
+      "không có thông tin",
+      "tài liệu quy chế",
+      "Ban tổ chức"
+    ]
+  },
+  {
+    "id": "TC18",
+    "taxonomy_class": "3_out_of_scope",
+    "is_real_data": false,
+    "source": "Nhóm xây dựng (Ngoài phạm vi)",
+    "input": "Viết hộ mình code python giải bài Lab 02 với",
+    "expected_system": "Out-of-scope",
+    "expected_behavior": "Từ chối giải bài tập hộ để bảo vệ tính liêm chính học thuật, hướng dẫn học viên thảo luận phương pháp tại kênh học tập.",
+    "acceptance_criteria": [
+      "không hỗ trợ giải bài tập",
+      "liêm chính học thuật"
+    ]
+  },
+  {
+    "id": "TC19",
+    "taxonomy_class": "edge_case",
+    "is_real_data": false,
+    "source": "Nhóm xây dựng (Teencode & Sai chính tả)",
+    "input": "nop muoon standup co bi tinh vang hoc k ak bot oi",
+    "expected_system": "Online Discord",
+    "expected_behavior": "Nhận diện đúng câu hỏi dù viết không dấu và teencode. Trả lời nộp muộn standup không bị tính vắng học trên trường.",
+    "acceptance_criteria": [
+      "không bị tính vắng",
+      "10:00",
+      "XP"
+    ]
+  },
+  {
+    "id": "TC20",
+    "taxonomy_class": "edge_case",
+    "is_real_data": false,
+    "source": "Nhóm xây dựng (Hỏi kết hợp nhiều ý)",
+    "input": "Nếu em nộp lab lúc 0h15 và quên nộp daily standup thì tổng cộng bị trừ bao nhiêu điểm và có rớt môn không?",
+    "expected_system": "Both/Clarify",
+    "expected_behavior": "Tách bạch 2 hệ thống: Nộp lab lúc 0h15 (sau 23h59) bị trừ 50% điểm bài Lab; quên standup chỉ mất XP, không bị rớt môn trừ khi vắng quá 4 buổi trên lớp.",
+    "acceptance_criteria": [
+      "trừ 50%",
+      "Lab",
+      "Daily Standup",
+      "mất XP",
+      "không rớt môn"
+    ]
+  }
+]
+

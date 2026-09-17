@@ -94,12 +94,12 @@
 
     <!-- INPUT -->
     <div class="px-4 pb-5 shrink-0">
-      <div class="bg-[var(--input-bg)] rounded-lg flex items-center px-4 gap-3">
-        <input id="chatInput" type="text" placeholder="Nhắn tin tới #?-hỏi-trợ-lý-quy-chế"
+      <form onsubmit="event.preventDefault(); handleSend();" class="bg-[var(--input-bg)] rounded-lg flex items-center px-4 gap-3">
+        <input id="chatInput" type="text" placeholder="Nhắn tin tới #?-hỏi-trợ-lý-quy-chế (Nhấn Enter hoặc bấm Gửi)..."
           class="flex-1 bg-transparent outline-none text-sm py-3 text-[var(--text-normal)] placeholder-[var(--text-muted)]"
-          onkeydown="if(event.key==='Enter')handleSend()">
-        <button onclick="handleSend()" class="text-[var(--text-muted)] hover:text-[var(--text-bright)] text-sm font-medium py-2">Gửi</button>
-      </div>
+          autocomplete="off">
+        <button type="submit" id="sendBtn" class="bg-[var(--blurple)] hover:bg-[#4752c4] text-white text-xs font-semibold px-4 py-1.5 rounded transition shadow">Gửi</button>
+      </form>
     </div>
   </div>
 </div>
@@ -432,8 +432,55 @@ function classifyAndRespond(raw){
   respondFallback();
 }
 
-function routeAfterTyping(text){
+function formatMarkdown(text) {
+  if (!text) return '';
+  return text
+    .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
+    .replace(/\*(.*?)\*/g, '<i>$1</i>')
+    .replace(/`([^`]+)`/g, '<code class="bg-[#2b2d31] px-1 rounded text-[var(--text-bright)]">$1</code>')
+    .replace(/\n/g, '<br>');
+}
+
+async function routeAfterTyping(text){
   typingIndicator();
+  
+  // Kiểm tra xem có server backend /api/chat không
+  try {
+    const response = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: text })
+    });
+    if (response.ok) {
+      const data = await response.json();
+      removeTyping();
+      if (data.reply) {
+        let bType = 'online';
+        let bLabel = `✨ AI: ${data.provider.toUpperCase()} (${data.model})`;
+        if (data.reply.includes('[Học vụ Offline VinUni]')) {
+          bType = 'offline';
+          bLabel = '📘 HỌC VỤ OFFLINE — TRƯỜNG VINUNI';
+        } else if (data.reply.includes('[Ngoài phạm vi quy chế]')) {
+          bType = 'danger';
+          bLabel = '⛔ NGOÀI THẨM QUYỀN / QUY CHẾ';
+        } else if (data.reply.includes('[Online Build Phase Discord]')) {
+          bType = 'online';
+          bLabel = '🟣 BUILD PHASE ONLINE — DISCORD';
+        }
+
+        botBubble({
+          text: formatMarkdown(data.reply),
+          badgeType: bType,
+          badgeLabel: bLabel,
+          citation: 'Ma trận Quy chế Khóa 4 (AI20K Cohort 4)'
+        });
+        return;
+      }
+    }
+  } catch (e) {
+    console.error('API Error, falling back to local classifier:', e);
+  }
+
   setTimeout(()=>{
     removeTyping();
     classifyAndRespond(text);

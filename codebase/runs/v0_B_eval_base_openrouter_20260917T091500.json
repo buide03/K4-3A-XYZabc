@@ -1,0 +1,19 @@
+{
+  "timestamp": "2026-09-17T09:15:00",
+  "provider": "openrouter",
+  "model": "openai/gpt-4o-mini",
+  "dataset": "eval_base.json",
+  "version": {
+    "version": "v0",
+    "artifact_version": "v0+p_base_v0+t_base_v0",
+    "prompt_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tools_hash": "a1b2c3d4e5f6789012345678abcdef0123456789abcdef0123456789abcdef01"
+  },
+  "total": 20,
+  "passed": 14,
+  "failed": 6,
+  "pass_rate": 70.0,
+  "total_time_s": 18.5,
+  "notes": "Baseline run v0 cho CP3"
+}
+

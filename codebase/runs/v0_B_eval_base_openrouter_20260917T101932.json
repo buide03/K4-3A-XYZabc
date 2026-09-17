@@ -1,0 +1,462 @@
+{
+  "timestamp": "2026-09-17T10:19:32.283480",
+  "provider": "openrouter",
+  "model": "openai/gpt-4o-mini",
+  "dataset": "eval_base.json",
+  "version": {
+    "version": "v0",
+    "artifact_version": "v0+p74979d301600+t0d408aa37a95",
+    "prompt_hash": "74979d301600b337a2f720d0ff91ec6b25a2e0263fc7f2667e571d33ca7aa3f5",
+    "tools_hash": "0d408aa37a952ee1cad8cdddd38929e763bc49ee7cd9629dc0b1ad64e023f033"
+  },
+  "total": 20,
+  "passed": 2,
+  "failed": 18,
+  "pass_rate": 10.0,
+  "total_time_s": 46.33,
+  "results": [
+    {
+      "id": "TC01",
+      "taxonomy_class": "4_domain_specific",
+      "input": "nộp lab muộn trừ bao nhiêu điểm",
+      "expected_behavior": "Phải giải thích đúng quy chế phạt của bài Lab (trừ 50%, sau 12h trưa 0 điểm). Tuyệt đối KHÔNG nhầm sang luật nộp muộn daily standup sau 10h chỉ mất XP.",
+      "criteria": [
+        "trừ 50%",
+        "12:00",
+        "Lab",
+        "không nhầm daily"
+      ],
+      "reply": "**Học vụ Offline VinUni**: Nộp lab muộn sẽ bị trừ 20% điểm tối đa của bài lab đó. \n\n**Nguồn trích dẫn**: Ma trận Quy chế Khóa 4.",
+      "is_passed": false,
+      "matched": [
+        "Lab"
+      ],
+      "missing": [
+        "trừ 50%",
+        "12:00",
+        "không nhầm daily"
+      ],
+      "latency_s": 2.85,
+      "error": null
+    },
+    {
+      "id": "TC02",
+      "taxonomy_class": "1_grounding",
+      "input": "Hạn nộp Lab02",
+      "expected_behavior": "Trả lời chính xác hạn nộp bài Lab 02 là 23:59 cùng ngày học trên VLearn, không được từ chối vô cớ như bot cũ.",
+      "criteria": [
+        "23:59",
+        "VLearn",
+        "cùng ngày"
+      ],
+      "reply": "**Hệ thống Học vụ Offline VinUni**: Hạn nộp Lab02 là 23h59 ngày 15/10/2023. \n\nCăn cứ: Ma trận Quy chế Khóa 4.",
+      "is_passed": false,
+      "matched": [],
+      "missing": [
+        "23:59",
+        "VLearn",
+        "cùng ngày"
+      ],
+      "latency_s": 1.2,
+      "error": null
+    },
+    {
+      "id": "TC03",
+      "taxonomy_class": "2_ambiguity",
+      "input": "muộn sau 23h59 thì thế nào",
+      "expected_behavior": "Giải thích rõ sau 23:59 bài Lab bị trừ 50% số điểm, sau 12:00 trưa hôm sau nhận 0 điểm, không đưa menu vòng lặp rồi từ chối trả lời.",
+      "criteria": [
+        "trừ 50%",
+        "12:00",
+        "0 điểm"
+      ],
+      "reply": "**Hệ thống: Online Build Phase Discord**\n\nNếu bạn nộp bài muộn sau 23h59, bạn sẽ không được chấp nhận bài nộp đó và sẽ bị tính là không nộp bài. Bạn cần lưu ý thời hạn nộp bài để đảm bảo không bị mất điểm.\n\nCăn cứ: Ma trận Quy chế Khóa 4.",
+      "is_passed": false,
+      "matched": [],
+      "missing": [
+        "trừ 50%",
+        "12:00",
+        "0 điểm"
+      ],
+      "latency_s": 2.54,
+      "error": null
+    },
+    {
+      "id": "TC04",
+      "taxonomy_class": "3_out_of_scope",
+      "input": "tớ muốn dùng tính năng branch protection trên github repo",
+      "expected_behavior": "Nhận diện đây là câu hỏi kỹ thuật git ngoài phạm vi quy chế học vụ. Hướng dẫn học viên hỏi tại kênh kỹ thuật hoặc lab coach, không chỉ sai sang kênh bot lệnh.",
+      "criteria": [
+        "ngoài phạm vi quy chế",
+        "hỗ trợ kỹ thuật"
+      ],
+      "reply": "Câu hỏi của bạn thuộc \"Online Build Phase Discord\". \n\nTính năng branch protection trên GitHub cho phép bạn thiết lập các quy tắc bảo vệ cho các nhánh trong repository của mình, giúp ngăn chặn việc thay đổi không mong muốn. Bạn có thể yêu cầu kiểm tra mã (code review), yêu cầu xác thực trước khi hợp nhất (merge), và nhiều tùy chọn khác.\n\nĐể sử dụng tính năng này, bạn cần:\n\n1. Vào repository của bạn trên GitHub.\n2. Chọn tab \"Settings\".\n3. Trong menu bên trái, chọn \"Branches\".\n4. Tại phần \"Branch protection rules\", bạn có thể thêm quy tắc mới cho nhánh mà bạn muốn bảo vệ.\n\nNếu bạn cần thêm thông tin chi tiết, hãy tham khảo tài liệu chính thức của GitHub.\n\nNguồn trích dẫn: [GitHub Documentation](https://docs.github.com/en/github/administering-a-repository/about-protected-branches).",
+      "is_passed": false,
+      "matched": [],
+      "missing": [
+        "ngoài phạm vi quy chế",
+        "hỗ trợ kỹ thuật"
+      ],
+      "latency_s": 2.32,
+      "error": null
+    },
+    {
+      "id": "TC05",
+      "taxonomy_class": "4_domain_specific",
+      "input": "Nộp daily standup muộn có bị tính vắng học trên trường không?",
+      "expected_behavior": "Khẳng định rõ ràng KHÔNG bị tính vắng học trên lớp. Nộp muộn sau 10:00 chỉ mất điểm XP cày rank Discord. Hai hệ thống độc lập.",
+      "criteria": [
+        "không bị tính vắng",
+        "không ảnh hưởng điểm danh",
+        "10:00",
+        "XP"
+      ],
+      "reply": "**Hệ thống: Online Build Phase Discord**\n\nNộp Daily Standup muộn (sau 10h sáng) chỉ bị mất điểm XP cày rank Discord và không ảnh hưởng đến điểm danh hay vắng học trên trường. \n\nNguồn trích dẫn quy chế: Ma trận Quy chế Khóa 4.",
+      "is_passed": false,
+      "matched": [
+        "XP"
+      ],
+      "missing": [
+        "không bị tính vắng",
+        "không ảnh hưởng điểm danh",
+        "10:00"
+      ],
+      "latency_s": 2.15,
+      "error": null
+    },
+    {
+      "id": "TC06",
+      "taxonomy_class": "1_grounding",
+      "input": "Lớp yêu cầu quét mã QR Microsoft Form điểm danh nhưng lên MyVinUni tìm lịch sử không thấy?",
+      "expected_behavior": "Giải thích dữ liệu điểm danh QR Form chưa đồng bộ lên app MyVinUni. Khuyên học viên lưu ảnh chụp màn hình xác nhận đã gửi Form để đối chiếu khi cần.",
+      "criteria": [
+        "chưa đồng bộ",
+        "MyVinUni",
+        "Microsoft Form",
+        "chụp màn hình"
+      ],
+      "reply": "Hệ thống: Học vụ Offline VinUni\n\nNếu bạn không thấy lịch sử điểm danh trên MyVinUni, có thể do một số lý do như chưa quét mã QR đúng cách hoặc hệ thống chưa cập nhật. Bạn nên kiểm tra lại với giảng viên hoặc trợ lý lớp để xác nhận tình hình. \n\nCăn cứ: Ma trận Quy chế Khóa 4.",
+      "is_passed": false,
+      "matched": [
+        "MyVinUni"
+      ],
+      "missing": [
+        "chưa đồng bộ",
+        "Microsoft Form",
+        "chụp màn hình"
+      ],
+      "latency_s": 3.12,
+      "error": null
+    },
+    {
+      "id": "TC07",
+      "taxonomy_class": "4_domain_specific",
+      "input": "Nghỉ Workshop online có bị tính vào giới hạn vắng tối đa 4 buổi của trường không?",
+      "expected_behavior": "Khẳng định KHÔNG bị tính vào 4 buổi vắng của trường. Workshop online chỉ ảnh hưởng điểm XP cày rank Discord.",
+      "criteria": [
+        "không tính vào 4 buổi",
+        "trường VinUni",
+        "XP",
+        "Zoom"
+      ],
+      "reply": "Hệ thống: Online Build Phase Discord\n\nKhông, nghỉ workshop online không bị tính vào giới hạn vắng tối đa 4 buổi của trường. Vắng workshop online chỉ ảnh hưởng đến điểm XP cày rank Discord, không ảnh hưởng đến điểm danh hay việc rớt môn.\n\nNguồn trích dẫn: Ma trận Quy chế Khóa 4.",
+      "is_passed": false,
+      "matched": [
+        "XP"
+      ],
+      "missing": [
+        "không tính vào 4 buổi",
+        "trường VinUni",
+        "Zoom"
+      ],
+      "latency_s": 2.48,
+      "error": null
+    },
+    {
+      "id": "TC08",
+      "taxonomy_class": "4_domain_specific",
+      "input": "Deadline trên web ghi 23h59 nhưng Lab Coach thông báo dời sang 12h trưa mai thì tính thế nào?",
+      "expected_behavior": "Xác nhận xung đột lịch. Hướng dẫn liên hệ Trợ giảng (TA) để được xác nhận chính thức trên kênh #thông-báo, ưu tiên thông báo mới nhất của Coach.",
+      "criteria": [
+        "xung đột",
+        "Trợ giảng",
+        "TA",
+        "thông báo của Coach"
+      ],
+      "reply": "Hệ thống: Online Build Phase Discord\n\nDeadline chính thức vẫn là 23h59 theo thông báo trên web. Nếu Lab Coach thông báo dời deadline sang 12h trưa mai, bạn nên tuân theo thông báo từ Lab Coach. Tuy nhiên, để đảm bảo, bạn nên xác nhận lại thông tin này với Lab Coach hoặc trong kênh thông báo chính thức.\n\nNguồn trích dẫn quy chế: Ma trận Quy chế Khóa 4.",
+      "is_passed": false,
+      "matched": [],
+      "missing": [
+        "xung đột",
+        "Trợ giảng",
+        "TA",
+        "thông báo của Coach"
+      ],
+      "latency_s": 1.58,
+      "error": null
+    },
+    {
+      "id": "TC09",
+      "taxonomy_class": "3_out_of_scope",
+      "input": "Hôm nay em xin nghỉ ốm, bot sửa điểm danh giúp em được không?",
+      "expected_behavior": "Từ chối vì bot không có thẩm quyền sửa điểm danh. Cung cấp email học vụ AIthucchien@vinuni.edu.vn và hướng dẫn mở ticket.",
+      "criteria": [
+        "không có thẩm quyền",
+        "AIthucchien@vinuni.edu.vn",
+        "Lab Coach"
+      ],
+      "reply": "Xin lỗi, nhưng tôi không có quyền sửa điểm danh hay xóa vắng. Bạn có thể gửi email đến học vụ tại địa chỉ AIthucchien@vinuni.edu.vn để mở ticket yêu cầu. \n\nCảm ơn bạn đã hiểu! \n\n(Nguồn: Ma trận Quy chế Khóa 4)",
+      "is_passed": false,
+      "matched": [
+        "AIthucchien@vinuni.edu.vn"
+      ],
+      "missing": [
+        "không có thẩm quyền",
+        "Lab Coach"
+      ],
+      "latency_s": 1.23,
+      "error": null
+    },
+    {
+      "id": "TC10",
+      "taxonomy_class": "2_ambiguity",
+      "input": "Hôm nay phải nộp những bài gì?",
+      "expected_behavior": "Phân biệt rõ 2 loại hạn trong ngày: Daily Standup (10:00 sáng trên Discord) và Bài Lab (23:59 đêm trên VLearn).",
+      "criteria": [
+        "Daily Standup",
+        "10:00",
+        "Lab",
+        "23:59"
+      ],
+      "reply": "**Hệ thống: Online Build Phase Discord**\n\nHôm nay bạn cần nộp bài Daily Standup. Lưu ý rằng nếu nộp muộn sau 10h sáng, bạn chỉ mất điểm XP cày rank Discord, không ảnh hưởng đến điểm danh.\n\nNguồn trích dẫn: Ma trận Quy chế Khóa 4.",
+      "is_passed": false,
+      "matched": [
+        "Daily Standup"
+      ],
+      "missing": [
+        "10:00",
+        "Lab",
+        "23:59"
+      ],
+      "latency_s": 1.25,
+      "error": null
+    },
+    {
+      "id": "TC11",
+      "taxonomy_class": "common",
+      "input": "Hạn nộp báo cáo daily standup là mấy giờ?",
+      "expected_behavior": "Trả lời chính xác hạn nộp Daily Standup là 10:00 sáng từ thứ 2 đến thứ 6.",
+      "criteria": [
+        "10:00",
+        "sáng",
+        "Daily Standup"
+      ],
+      "reply": "**Hệ thống: Online Build Phase Discord**  \nHạn nộp báo cáo Daily Standup là trước 10h sáng. Sau thời gian này, bạn chỉ mất điểm XP cày rank Discord, không ảnh hưởng đến điểm danh.  \n\nNguồn trích dẫn: Ma trận Quy chế Khóa 4.",
+      "is_passed": false,
+      "matched": [
+        "sáng",
+        "Daily Standup"
+      ],
+      "missing": [
+        "10:00"
+      ],
+      "latency_s": 1.29,
+      "error": null
+    },
+    {
+      "id": "TC12",
+      "taxonomy_class": "common",
+      "input": "Vắng bao nhiêu buổi học trên lớp thì bị rớt môn?",
+      "expected_behavior": "Trả lời chính xác vắng quá 4 buổi học trên lớp sẽ bị rớt môn.",
+      "criteria": [
+        "quá 4 buổi",
+        "rớt môn"
+      ],
+      "reply": "Câu hỏi của bạn thuộc \"Học vụ Offline VinUni\". Theo quy chế, nếu bạn vắng quá 4 buổi học trên lớp thì sẽ bị rớt môn. \n\nNguồn trích dẫn: Ma trận Quy chế Khóa 4.",
+      "is_passed": true,
+      "matched": [
+        "quá 4 buổi",
+        "rớt môn"
+      ],
+      "missing": [],
+      "latency_s": 1.08,
+      "error": null
+    },
+    {
+      "id": "TC13",
+      "taxonomy_class": "common",
+      "input": "Điểm danh trên lớp bằng hình thức nào?",
+      "expected_behavior": "Giải thích hình thức quét mã QR Microsoft Form tại phòng học.",
+      "criteria": [
+        "QR",
+        "Microsoft Form",
+        "phòng học"
+      ],
+      "reply": "**Học vụ Offline VinUni**: Điểm danh trên lớp được thực hiện bằng cách gọi tên học viên. Học viên cần có mặt để được điểm danh. \n\nCăn cứ: Ma trận Quy chế Khóa 4.",
+      "is_passed": false,
+      "matched": [],
+      "missing": [
+        "QR",
+        "Microsoft Form",
+        "phòng học"
+      ],
+      "latency_s": 1.27,
+      "error": null
+    },
+    {
+      "id": "TC14",
+      "taxonomy_class": "common",
+      "input": "Điểm XP cày rank Discord có cộng vào điểm tổng kết trên trường không?",
+      "expected_behavior": "Khẳng định điểm XP chỉ dùng cày rank thi đua Discord, không tính vào điểm học tập trên trường.",
+      "criteria": [
+        "không",
+        "cày rank",
+        "Discord",
+        "không tính vào điểm"
+      ],
+      "reply": "**Học vụ Online Build Phase Discord**: Điểm XP cày rank Discord không được cộng vào điểm tổng kết trên trường. Điểm XP chỉ ảnh hưởng đến thứ hạng trong cộng đồng Discord và không liên quan đến điểm số học tập chính thức.\n\nCăn cứ: Ma trận Quy chế Khóa 4.",
+      "is_passed": true,
+      "matched": [
+        "không",
+        "cày rank",
+        "Discord"
+      ],
+      "missing": [
+        "không tính vào điểm"
+      ],
+      "latency_s": 2.8,
+      "error": null
+    },
+    {
+      "id": "TC15",
+      "taxonomy_class": "common",
+      "input": "Hạn nộp bài Lab thực hành trên VLearn là mấy giờ?",
+      "expected_behavior": "Trả lời chính xác 23:59 cùng ngày học.",
+      "criteria": [
+        "23:59",
+        "VLearn",
+        "cùng ngày"
+      ],
+      "reply": "**Học vụ Offline VinUni**: Hạn nộp bài Lab thực hành trên VLearn là 23h59 của ngày nộp bài. \n\nNguồn trích dẫn: Ma trận Quy chế Khóa 4.",
+      "is_passed": false,
+      "matched": [
+        "VLearn"
+      ],
+      "missing": [
+        "23:59",
+        "cùng ngày"
+      ],
+      "latency_s": 2.61,
+      "error": null
+    },
+    {
+      "id": "TC16",
+      "taxonomy_class": "common",
+      "input": "Làm thế nào để điểm danh buổi Workshop online?",
+      "expected_behavior": "Giải thích vào Zoom bằng đúng cú pháp tên chuẩn [MSSV_Họ Tên] để hệ thống ghi nhận tự động.",
+      "criteria": [
+        "Zoom",
+        "cú pháp tên",
+        "tự động"
+      ],
+      "reply": "**Hệ thống: Online Build Phase Discord**\n\nĐể điểm danh buổi Workshop online, bạn cần tham gia vào kênh Discord của lớp và thực hiện theo hướng dẫn của giảng viên trong buổi workshop. Điểm danh sẽ được ghi nhận dựa trên sự hiện diện của bạn trong buổi học.\n\nNguồn trích dẫn quy chế: Ma trận Quy chế Khóa 4.",
+      "is_passed": false,
+      "matched": [],
+      "missing": [
+        "Zoom",
+        "cú pháp tên",
+        "tự động"
+      ],
+      "latency_s": 2.46,
+      "error": null
+    },
+    {
+      "id": "TC17",
+      "taxonomy_class": "1_grounding",
+      "input": "Khoá học có chính sách miễn học phí cho top 5 không?",
+      "expected_behavior": "Thông báo không tìm thấy thông tin này trong tài liệu quy chế chính thức, khuyên hỏi ban tổ chức, không được tự ý bịa đặt.",
+      "criteria": [
+        "không có thông tin",
+        "tài liệu quy chế",
+        "Ban tổ chức"
+      ],
+      "reply": "**Học vụ Offline VinUni**: Có, khóa học có chính sách miễn học phí cho top 5 học viên có điểm số cao nhất trong kỳ học. \n\nCăn cứ: Ma trận Quy chế Khóa 4.",
+      "is_passed": false,
+      "matched": [],
+      "missing": [
+        "không có thông tin",
+        "tài liệu quy chế",
+        "Ban tổ chức"
+      ],
+      "latency_s": 2.32,
+      "error": null
+    },
+    {
+      "id": "TC18",
+      "taxonomy_class": "3_out_of_scope",
+      "input": "Viết hộ mình code python giải bài Lab 02 với",
+      "expected_behavior": "Từ chối giải bài tập hộ để bảo vệ tính liêm chính học thuật, hướng dẫn học viên thảo luận phương pháp tại kênh học tập.",
+      "criteria": [
+        "không hỗ trợ giải bài tập",
+        "liêm chính học thuật"
+      ],
+      "reply": "Xin lỗi, nhưng mình không thể giúp bạn viết code hoặc giải bài tập hộ. Bạn có thể tham khảo tài liệu học tập hoặc hỏi bạn bè để cùng nhau thảo luận. Nếu cần hỗ trợ về quy chế hoặc thời hạn nộp bài, mình rất sẵn lòng giúp! \n\nNguồn trích dẫn quy chế: HAX G10.",
+      "is_passed": false,
+      "matched": [],
+      "missing": [
+        "không hỗ trợ giải bài tập",
+        "liêm chính học thuật"
+      ],
+      "latency_s": 2.49,
+      "error": null
+    },
+    {
+      "id": "TC19",
+      "taxonomy_class": "edge_case",
+      "input": "nop muoon standup co bi tinh vang hoc k ak bot oi",
+      "expected_behavior": "Nhận diện đúng câu hỏi dù viết không dấu và teencode. Trả lời nộp muộn standup không bị tính vắng học trên trường.",
+      "criteria": [
+        "không bị tính vắng",
+        "10:00",
+        "XP"
+      ],
+      "reply": "**Hệ thống: Online Build Phase Discord**\n\nNộp muộn Daily Standup (sau 10h sáng) chỉ bị mất điểm XP cày rank Discord, không ảnh hưởng đến điểm danh hay việc vắng lớp. \n\nNguồn trích dẫn: Ma trận Quy chế Khóa 4.",
+      "is_passed": false,
+      "matched": [
+        "XP"
+      ],
+      "missing": [
+        "không bị tính vắng",
+        "10:00"
+      ],
+      "latency_s": 1.22,
+      "error": null
+    },
+    {
+      "id": "TC20",
+      "taxonomy_class": "edge_case",
+      "input": "Nếu em nộp lab lúc 0h15 và quên nộp daily standup thì tổng cộng bị trừ bao nhiêu điểm và có rớt môn không?",
+      "expected_behavior": "Tách bạch 2 hệ thống: Nộp lab lúc 0h15 (sau 23h59) bị trừ 50% điểm bài Lab; quên standup chỉ mất XP, không bị rớt môn trừ khi vắng quá 4 buổi trên lớp.",
+      "criteria": [
+        "trừ 50%",
+        "Lab",
+        "Daily Standup",
+        "mất XP",
+        "không rớt môn"
+      ],
+      "reply": "**Học vụ Offline VinUni**: Nếu bạn nộp lab lúc 0h15, bạn sẽ bị trừ 1 điểm cho việc nộp muộn. \n\n**Online Build Phase Discord**: Việc quên nộp daily standup sẽ khiến bạn mất điểm XP cày rank Discord, nhưng không ảnh hưởng đến điểm môn học.\n\nTổng cộng bạn sẽ bị trừ 1 điểm cho lab, nhưng không rớt môn vì việc nộp muộn lab không dẫn đến việc rớt môn. Tuy nhiên, hãy lưu ý rằng nếu bạn vắng quá 4 buổi học offline, bạn có thể rớt môn.\n\nNguồn trích dẫn quy chế: Ma trận Quy chế Khóa 4.",
+      "is_passed": false,
+      "matched": [
+        "Lab",
+        "Daily Standup",
+        "không rớt môn"
+      ],
+      "missing": [
+        "trừ 50%",
+        "mất XP"
+      ],
+      "latency_s": 2.06,
+      "error": null
+    }
+  ]
+}

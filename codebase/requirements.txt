@@ -1,0 +1,14 @@
+# Live model provider SDKs:
+openai>=1.0.0
+anthropic>=0.34.0
+google-genai>=0.8.0
+
+# Local tools and declarations:
+PyYAML>=6.0
+
+# HTTP & environment:
+requests>=2.31.0
+python-dotenv>=1.0.0
+
+# Optional UI:
+streamlit>=1.30.0

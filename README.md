@@ -4,16 +4,34 @@
 
 ## 👥 Thành viên nhóm & Phân công vai trò
 
-**Lớp:** 3A · **Phòng:** ____ · **Cụm:** ____ · **Track:** ____
+**Lớp:** 3A · **Phòng:** E403 · **Cụm:** ____ · **Track:** B — Trợ lý Học viên
 
 | Họ và Tên | Mã Học Viên | Vai trò chính | Phần việc đảm nhiệm trong dự án |
 |---|---|---|---|
-|  |  |  |  |
-|  |  |  |  |
-|  |  |  |  |
-|  |  |  |  |
+| Bùi Đình Đề | 2A202602818 | Đội trưởng | Quản trị dự án, viết AI Spec (§1-§4), thiết kế kiến trúc Core Engine & Multi-provider |
+| Phùng Gia Khánh | 2A202602585 | Thành viên | Khai phá dữ liệu `k4_messages.csv`, xây dựng bộ kiểm thử Golden Set (20 cases) |
+| Lê Tuấn Hưng | 2A202602665 | Thành viên | Phát triển giao diện tương tác Discord UI (`index.html`), kết nối API thời gian thực |
+| Đinh Quang Lâm | 2A202602875 | Thành viên | Xây dựng ma trận quy chế (`course_policy/`), chạy thực nghiệm kiểm thử & quay video demo |
 
 > Nhóm copy nguyên file README này về repo của mình, rồi điền bảng trên. Cột **Phần việc đảm nhiệm** ghi càng cụ thể càng tốt.
+
+---
+
+## 📊 Kết quả Nghiệm thu Checkpoint 3 (CP3) — Số đo & Log thực tế
+
+Ban Giám Khảo và Ban Tổ Chức có thể kiểm tra trực tiếp các bằng chứng thực nghiệm của nhóm tại các tệp:
+
+* 📄 **Báo cáo Số đo & Phân tích lỗi chi tiết:** [`eval/run_results.md`](eval/run_results.md)
+  * **Bộ kiểm thử Golden Set:** 20 ca (phân loại theo Taxonomy 4 lớp, 50% trích từ tin nhắn thật).
+  * **Số đo Lượt đầu (Baseline v0):** **2/20 ca ĐẠT (10.0%)** — mô hình bịa luật khi chưa có grounding.
+  * **Số đo Cải tiến (Refined v1):** **19/20 ca ĐẠT (95.0%)** — sau khi nhúng Ma trận Quy chế Khóa 4.
+* 📁 **Thư mục Log JSON thô từng lượt chạy:** [`codebase/runs/`](codebase/runs/)
+  * Log lượt v0: [`codebase/runs/v0_B_eval_base_openrouter_20260917T101932.json`](codebase/runs/v0_B_eval_base_openrouter_20260917T101932.json)
+  * Log lượt v1: [`codebase/runs/v1_B_eval_base_openrouter_20260917T102443.json`](codebase/runs/v1_B_eval_base_openrouter_20260917T102443.json)
+* 📈 **Nhật ký phiên bản:** [`codebase/artifacts/version_log.csv`](codebase/artifacts/version_log.csv)
+* 🎯 **Bộ dữ liệu Golden Set:** [`eval/golden_set.json`](eval/golden_set.json)
+
+---
 
 - Thời lượng: **47,5 giờ** từ phát đề đến thuyết trình (ca 3A) — LAB 5 (phát đề + build) · LEC 6 (tiếp tục build theo ca) · LAB 6 (vòng thi)
 - Nhóm: **3-4 người** · thi theo phòng (E403 / E402), chia cụm rồi chung kết phòng — xem *Thể thức thi*
