@@ -17,19 +17,29 @@
 
 ---
 
-## 📊 Kết quả Nghiệm thu Checkpoint 3 (CP3) — Số đo & Log thực tế
+## 📊 Kết quả Nghiệm thu Toàn diện (Checkpoints CP1 → CP5)
 
-Ban Giám Khảo và Ban Tổ Chức có thể kiểm tra trực tiếp các bằng chứng thực nghiệm của nhóm tại các tệp:
+Ban Giám Khảo và Ban Tổ Chức có thể kiểm tra trực tiếp các sản phẩm bàn giao chính thức của nhóm tại:
 
-* 📄 **Báo cáo Số đo & Phân tích lỗi chi tiết:** [`eval/run_results.md`](eval/run_results.md)
-  * **Bộ kiểm thử Golden Set:** 20 ca (phân loại theo Taxonomy 4 lớp, 50% trích từ tin nhắn thật).
-  * **Số đo Lượt đầu (Baseline v0):** **2/20 ca ĐẠT (10.0%)** — mô hình bịa luật khi chưa có grounding.
-  * **Số đo Cải tiến (Refined v1):** **19/20 ca ĐẠT (95.0%)** — sau khi nhúng Ma trận Quy chế Khóa 4.
+* 📄 **AI Spec hoàn chỉnh (Khóa tại CP4):** [`spec.md`](spec.md)
+  * Đầy đủ 8 phần chuẩn theo `02-guide.md`, khóa cứng **Quality Bar định lượng** và bảng **Tự khai báo khuyết điểm (Self-disclosure)**.
+* 📑 **Slide Thuyết trình Vòng Chung kết (CP5):** [`demo-slides.pdf`](demo-slides.pdf)
+  * Slide 6 trang định dạng PDF tỷ lệ 16:9 chuẩn theo quy định tại mục §5.1 của `02-guide.md`.
+* 👥 **Nhật ký Kiểm chứng Người dùng Thực tế (Khối R6 — 8 điểm):** [`validation/user_testing_log.md`](validation/user_testing_log.md)
+  * Phỏng vấn thực tế 5 người dùng ngoài nhóm (gồm 2 willing users đã đăng ký từ CP1) theo nguyên tắc **Mom Test**.
+* 📈 **Báo cáo Số đo & Đo kiểm Thực nghiệm Thực tế (CP3):** [`eval/run_results.md`](eval/run_results.md)
+  * **Tổng số ca kiểm thử:** **30 ca** (20 ca Golden Set + 10 ca Adversarial Suite).
+  * **Kết quả đo kiểm thực tế:** **29 / 30 ca ĐẠT (96.7%)** qua mô hình `openai/gpt-4o-mini` (OpenRouter API).
+  * **Bộ 1 (Golden Set 20 ca):** **20/20 ca ĐẠT (100.0%)** — 50% trích xuất từ tin nhắn thật.
+  * **Bộ 2 (Adversarial Suite 10 ca):** **9/10 ca ĐẠT (90.0%)** — phòng thủ thành công injection, teencode, bẫy chức sắc.
+  * **Quá trình cải tiến:** Baseline v0 (10.0%) ➔ Refined v1 (95.0%) ➔ Production v2 (96.7%).
 * 📁 **Thư mục Log JSON thô từng lượt chạy:** [`codebase/runs/`](codebase/runs/)
-  * Log lượt v0: [`codebase/runs/v0_B_eval_base_openrouter_20260917T101932.json`](codebase/runs/v0_B_eval_base_openrouter_20260917T101932.json)
-  * Log lượt v1: [`codebase/runs/v1_B_eval_base_openrouter_20260917T102443.json`](codebase/runs/v1_B_eval_base_openrouter_20260917T102443.json)
+  * Log v0: [`codebase/runs/v0_B_eval_base_openrouter_20260917T101932.json`](codebase/runs/v0_B_eval_base_openrouter_20260917T101932.json)
+  * Log v1: [`codebase/runs/v1_B_eval_base_openrouter_20260917T102443.json`](codebase/runs/v1_B_eval_base_openrouter_20260917T102443.json)
+  * Log v2 (Golden 20 ca): [`codebase/runs/v2_B_eval_base_openrouter_20260917T142651.json`](codebase/runs/v2_B_eval_base_openrouter_20260917T142651.json)
+  * Log v2_adv (Adversarial 10 ca): [`codebase/runs/v2_adv_B_eval_adversarial_openrouter_20260917T142725.json`](codebase/runs/v2_adv_B_eval_adversarial_openrouter_20260917T142725.json)
 * 📈 **Nhật ký phiên bản:** [`codebase/artifacts/version_log.csv`](codebase/artifacts/version_log.csv)
-* 🎯 **Bộ dữ liệu Golden Set:** [`eval/golden_set.json`](eval/golden_set.json)
+* 🎯 **Bộ dữ liệu kiểm thử độc lập:** [`eval/golden_set.json`](eval/golden_set.json) & [`eval/eval_adversarial.json`](eval/eval_adversarial.json)
 
 ---
 

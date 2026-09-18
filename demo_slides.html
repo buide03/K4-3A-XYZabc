@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <title>Demo Slides - K4-3A-XYZabc</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
 
   @page {
     size: 16in 9in;
@@ -18,8 +18,8 @@
   }
 
   body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: #0f1117;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #0b0f19;
     color: #e2e8f0;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
@@ -30,37 +30,39 @@
     height: 9in;
     page-break-after: always;
     position: relative;
-    padding: 0.8in 1in 0.7in 1in;
+    padding: 0.65in 0.9in 0.55in 0.9in;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background: #0f1117;
+    background: #0b0f19;
     overflow: hidden;
   }
 
-  /* Slide Background Glow */
+  /* Decorative Ambient Gradients */
   .slide::before {
     content: "";
     position: absolute;
-    top: -100px;
-    right: -100px;
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, rgba(88, 101, 242, 0.15) 0%, rgba(15, 17, 23, 0) 70%);
+    top: -120px;
+    right: -120px;
+    width: 550px;
+    height: 550px;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.18) 0%, rgba(11, 15, 25, 0) 70%);
     border-radius: 50%;
     z-index: 0;
+    pointer-events: none;
   }
 
   .slide::after {
     content: "";
     position: absolute;
-    bottom: -100px;
-    left: -100px;
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, rgba(15, 17, 23, 0) 70%);
+    bottom: -120px;
+    left: -120px;
+    width: 450px;
+    height: 450px;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, rgba(11, 15, 25, 0) 70%);
     border-radius: 50%;
     z-index: 0;
+    pointer-events: none;
   }
 
   .slide-content {
@@ -69,215 +71,208 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
   }
 
-  /* Header */
+  /* Header Section */
   .slide-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.08);
-    padding-bottom: 0.3in;
-    margin-bottom: 0.4in;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 0.22in;
+    margin-bottom: 0.25in;
   }
 
-  .badge-container {
+  .badge-row {
     display: flex;
-    gap: 12px;
+    gap: 10px;
     align-items: center;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
 
   .badge {
     display: inline-block;
-    padding: 4px 14px;
+    padding: 4px 12px;
     border-radius: 9999px;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
 
-  .badge-purple { background: rgba(88, 101, 242, 0.2); color: #818cf8; border: 1px solid rgba(88, 101, 242, 0.4); }
-  .badge-blue { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.4); }
-  .badge-green { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4); }
-  .badge-orange { background: rgba(249, 115, 22, 0.2); color: #fb923c; border: 1px solid rgba(249, 115, 22, 0.4); }
+  .badge-purple { background: rgba(99, 102, 241, 0.2); color: #a5b4fc; border: 1px solid rgba(99, 102, 241, 0.4); }
+  .badge-blue { background: rgba(56, 189, 248, 0.2); color: #7dd3fc; border: 1px solid rgba(56, 189, 248, 0.4); }
+  .badge-green { background: rgba(34, 197, 94, 0.2); color: #86efac; border: 1px solid rgba(34, 197, 94, 0.4); }
+  .badge-orange { background: rgba(249, 115, 22, 0.2); color: #fdba74; border: 1px solid rgba(249, 115, 22, 0.4); }
 
   .slide-title {
-    font-size: 38px;
+    font-size: 34px;
     font-weight: 800;
     color: #ffffff;
     letter-spacing: -0.02em;
+    line-height: 1.2;
   }
 
   .slide-subtitle {
-    font-size: 18px;
+    font-size: 16px;
     color: #94a3b8;
     margin-top: 4px;
+    font-weight: 500;
   }
 
-  .team-tag {
+  .team-info {
     text-align: right;
-    font-size: 15px;
+    font-size: 14px;
     color: #64748b;
-    font-weight: 600;
+    line-height: 1.4;
   }
 
-  .team-tag strong {
-    color: #cbd5e1;
+  .team-info strong {
+    color: #e2e8f0;
   }
 
-  /* Body */
+  /* Body Section */
   .slide-body {
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    gap: 0.2in;
   }
 
-  /* Footer */
+  /* Footer Section */
   .slide-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    padding-top: 0.2in;
-    font-size: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 0.15in;
+    margin-top: 0.2in;
+    font-size: 13px;
     color: #64748b;
-    font-weight: 500;
   }
 
-  .page-num {
-    font-weight: 700;
+  .page-indicator {
+    font-weight: 800;
     color: #818cf8;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 16px;
+    font-size: 15px;
   }
 
-  /* Components */
+  /* Grid Layouts */
   .grid-2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 0.5in;
-    align-items: stretch;
+    gap: 0.35in;
   }
 
   .grid-3 {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 0.4in;
+    gap: 0.3in;
   }
 
   .grid-4 {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 0.3in;
+    gap: 0.25in;
   }
 
+  /* Cards & Containers */
   .card {
-    background: rgba(30, 41, 59, 0.5);
+    background: rgba(17, 24, 39, 0.7);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 16px;
-    padding: 24px 28px;
-    backdrop-filter: blur(10px);
+    border-radius: 14px;
+    padding: 20px 24px;
+    backdrop-filter: blur(12px);
   }
 
   .card-highlight {
-    background: rgba(88, 101, 242, 0.08);
-    border: 1px solid rgba(88, 101, 242, 0.3);
+    background: rgba(99, 102, 241, 0.08);
+    border: 1px solid rgba(99, 102, 241, 0.35);
   }
 
   .card-title {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 700;
-    color: #f1f5f9;
-    margin-bottom: 14px;
+    color: #f8fafc;
+    margin-bottom: 12px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
   }
 
-  .stat-box {
-    background: rgba(15, 23, 42, 0.6);
-    border-radius: 12px;
-    padding: 16px 20px;
-    border-left: 4px solid #3b82f6;
-    margin-bottom: 16px;
+  .stat-block {
+    background: rgba(15, 23, 42, 0.8);
+    border-radius: 10px;
+    padding: 14px 18px;
+    border-left: 4px solid #6366f1;
+    margin-bottom: 14px;
   }
 
-  .stat-num {
-    font-size: 32px;
+  .stat-number {
+    font-size: 28px;
     font-weight: 800;
     color: #38bdf8;
     font-family: 'JetBrains Mono', monospace;
+    line-height: 1.1;
   }
 
-  .stat-desc {
-    font-size: 14px;
+  .stat-label {
+    font-size: 13px;
     color: #94a3b8;
     margin-top: 4px;
+    line-height: 1.4;
   }
 
-  .quote-box {
+  .quote-container {
     background: rgba(239, 68, 68, 0.08);
     border-left: 4px solid #ef4444;
-    padding: 14px 18px;
-    border-radius: 0 12px 12px 0;
-    margin-top: 12px;
+    padding: 12px 16px;
+    border-radius: 0 10px 10px 0;
     font-style: italic;
     color: #fca5a5;
-    font-size: 15px;
+    font-size: 14px;
     line-height: 1.5;
   }
 
-  .quote-author {
+  .quote-src {
     display: block;
     font-style: normal;
     font-weight: 600;
-    font-size: 13px;
+    font-size: 12px;
     color: #f87171;
     margin-top: 6px;
     text-align: right;
   }
 
-  table.slide-table {
+  /* Table Style */
+  table.data-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 15px;
+    font-size: 14px;
   }
 
-  table.slide-table th {
-    background: rgba(30, 41, 59, 0.9);
+  table.data-table th {
+    background: rgba(30, 41, 59, 0.95);
     color: #94a3b8;
     text-align: left;
-    padding: 12px 16px;
+    padding: 10px 14px;
     font-weight: 600;
     border-bottom: 2px solid rgba(255, 255, 255, 0.1);
   }
 
-  table.slide-table td {
-    padding: 14px 16px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  table.data-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     color: #cbd5e1;
+    vertical-align: middle;
   }
 
-  .highlight-pass {
-    color: #4ade80;
-    font-weight: 700;
-  }
-
-  .highlight-danger {
-    color: #f87171;
-    font-weight: 700;
-  }
-
-  .tag-pill {
-    display: inline-block;
-    padding: 3px 8px;
-    border-radius: 6px;
-    font-size: 12px;
-    font-weight: 600;
-  }
+  .text-pass { color: #4ade80; font-weight: 700; }
+  .text-fail { color: #f87171; font-weight: 700; }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
 </style>
 </head>
 <body>
@@ -287,43 +282,51 @@
   <div class="slide-content">
     <div class="slide-header">
       <div>
-        <div class="badge-container">
+        <div class="badge-row">
           <span class="badge badge-purple">Track B: Trợ lý Học viên</span>
-          <span class="badge badge-blue">SPEC §1 & §2</span>
+          <span class="badge badge-blue">SPEC §1 & §2 · BẰNG CHỨNG & IMPACT</span>
         </div>
-        <h1 class="slide-title">Bối Cảnh & Nỗi Đau Thực Tế Của Học Viên Khóa 4</h1>
-        <p class="slide-subtitle">Sự cố thông tin sai lệch từ Bot cũ gây trừ điểm bài Lab và quá tải đội ngũ Trợ giảng</p>
+        <h1 class="slide-title">Bối Cảnh, Bài Toán & Nỗi Đau Thực Tế</h1>
+        <p class="slide-subtitle">Sự cố trả lời sai quy chế của Bot cũ gây nguy cơ trượt môn cho học viên và quá tải Trợ giảng</p>
       </div>
-      <div class="team-tag">
-        Nhóm: <strong>XYZabc</strong> · Lớp <strong>3A</strong><br>
-        Phòng <strong>E403</strong>
+      <div class="team-info">
+        Nhóm: <strong>XYZabc</strong> · Lớp <strong>3A</strong> · Phòng <strong>E403</strong><br>
+        Đội trưởng: <strong>Bùi Đình Đề</strong> (MSSV: 2A202602818)
       </div>
     </div>
 
     <div class="slide-body">
       <div class="grid-2">
         <div class="card">
-          <h2 class="card-title">🔍 Bằng Chứng Khai Phá (1.092 Tin Nhắn Chatlog)</h2>
-          <div class="stat-box" style="border-color: #ef4444;">
-            <div class="stat-num" style="color: #f87171;">~10% Lỗi Nghiệp Vụ</div>
-            <div class="stat-desc">Trong 313 tin nhắn của Bot cũ, có ~10% trả lời sai quy chế, đánh tráo khái niệm hoặc rơi vào vòng lặp menu 1-2-3 vô dụng.</div>
+          <h2 class="card-title">🔍 Bằng Chứng Khai Phá (Chatlog & Khảo Sát Thật)</h2>
+          <div class="stat-block" style="border-color: #ef4444;">
+            <div class="stat-number" style="color: #f87171;">~10% Lỗi Nghiệp Vụ Trí Mạng</div>
+            <div class="stat-label">Trong 1.092 tin nhắn toàn khóa (`k4_messages.csv`) và 313 phản hồi của bot cũ, có tới ~10% tin nhắn trả lời sai luật hoặc rơi vào vòng lặp menu vô dụng.</div>
           </div>
-          <div class="quote-box">
+          <div class="quote-container">
             "M75012: [@BOT] nộp lab muộn trừ bao nhiêu điểm?<br>
             👉 Bot (M77155): Nộp daily muộn hơn 10h sáng vẫn ghi nhận nhưng không tính +XP nhé."
-            <span class="quote-author">— Trích chatlog thật k4_messages.csv (Sai chí mạng: nộp Lab muộn phạt 50% điểm!)</span>
+            <span class="quote-src">— Chatlog thực tế k4_messages.csv (Sai chí mạng: nộp Lab muộn phạt 50% điểm bài tập!)</span>
+          </div>
+          <div class="quote-container" style="margin-top: 10px; border-color: #f59e0b; background: rgba(245, 158, 11, 0.08); color: #fde68a;">
+            "Hôm làm Lab day 4, bot báo 24h đêm nay phải nộp, cả lớp tá hỏa tốn hơn 1 tiếng đi hỏi TA mới biết hạn là 12h trưa mai!"
+            <span class="quote-src" style="color: #fbbf24;">— Học viên A (Khảo sát trực tiếp tại phòng E403)</span>
           </div>
         </div>
 
         <div class="card card-highlight">
-          <h2 class="card-title">🎯 Tác Động Định Lượng & Quyết Định Chọn</h2>
-          <div class="stat-box" style="border-color: #38bdf8;">
-            <div class="stat-num">50 Học Viên & 500 Phút Dập Lửa</div>
-            <div class="stat-desc">Chỉ cần 5% trong 1.000 học viên tin vào bot cũ sẽ bị trễ hạn bài Lab (trừ 50% điểm môn); tiêu tốn 8+ giờ của TA để xử lý khiếu nại.</div>
+          <h2 class="card-title">🎯 Đánh Giá Tác Động (Impact) & Quyết Định Chọn</h2>
+          <div class="stat-block" style="border-color: #38bdf8;">
+            <div class="stat-number">50 Học Viên & 500 Phút Xử Lý Sự Cố</div>
+            <div class="stat-label">Chỉ cần 5% trong 1.000 học viên tin câu trả lời M77155 của Bot sẽ bị nộp trễ Lab và trừ 50% điểm môn; TA phải tốn 50 người &times; 10 phút = 500 phút (8+ giờ) dập lửa.</div>
           </div>
-          <div style="margin-top: 14px; font-size: 15px; line-height: 1.6; color: #cbd5e1;">
-            <p><strong>• Ứng viên ĐÃ CHỌN:</strong> Giải quyết triệt để lỗi đánh tráo khái niệm và sai lệch deadline giữa hai hệ thống (Học vụ VinUni vs Discord).</p>
-            <p style="margin-top: 8px;"><strong>• Ứng viên ĐÃ LOẠI:</strong> Tính năng tán gẫu ngoài lề (Chitchat) và tối ưu menu chat vì chỉ là phiền toái nhỏ, không gây tổn hại trực tiếp đến điểm số học viên.</p>
+          <div style="font-size: 14px; line-height: 1.6; color: #cbd5e1;">
+            <p><strong style="color: #38bdf8;">• Ứng viên CHỌN (Nỗi đau trí mạng):</strong> Giải quyết dứt điểm lỗi nhầm lẫn giữa deadline Lab (VLearn) và Daily Standup (Discord) để cứu điểm học viên.</p>
+            <p style="margin-top: 10px;"><strong style="color: #94a3b8;">• Ứng viên ĐÃ LOẠI:</strong></p>
+            <ul style="padding-left: 18px; margin-top: 4px; color: #94a3b8;">
+              <li><em>Tán gẫu ngoài lề (Chitchat):</em> Không gây tổn hại điểm số.</li>
+              <li><em>Tối ưu menu 1-2-3:</em> Chỉ là phiền toái nhỏ, học viên vẫn hỏi được Mod.</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -331,7 +334,7 @@
 
     <div class="slide-footer">
       <span>Mini Hackathon AI — Batch 04 · Lớp 3A · E403</span>
-      <span class="page-num">01 / 06</span>
+      <span class="page-indicator">01 / 06</span>
     </div>
   </div>
 </div>
@@ -341,53 +344,54 @@
   <div class="slide-content">
     <div class="slide-header">
       <div>
-        <div class="badge-container">
+        <div class="badge-row">
           <span class="badge badge-purple">Thiết Kế Cốt Lõi</span>
-          <span class="badge badge-blue">SPEC §4</span>
+          <span class="badge badge-blue">SPEC §4 · LÁT CẮT & KIẾN TRÚC</span>
         </div>
-        <h1 class="slide-title">Lát Cắt Giải Pháp & Kiến Trúc Sản Phẩm</h1>
+        <h1 class="slide-title">Lát Cắt Giải Pháp & Kiến Trúc Tổng Quan</h1>
         <p class="slide-subtitle">Trợ lý tra cứu chính xác quy chế theo nguyên tắc Augment (Trợ lực con người)</p>
       </div>
-      <div class="team-tag">
+      <div class="team-info">
         Mô hình: <strong>openai/gpt-4o-mini</strong><br>
-        Framework: <strong>OpenRouter API + RAG</strong>
+        Kiến trúc: <strong>In-Memory Policy RAG + Multi-Provider</strong>
       </div>
     </div>
 
     <div class="slide-body">
-      <div class="card" style="margin-bottom: 24px; background: rgba(88, 101, 242, 0.12); border-color: rgba(88, 101, 242, 0.4);">
-        <h3 style="color: #a5b4fc; font-size: 16px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">📌 Lát Cắt Một Câu (Core Slice)</h3>
-        <p style="font-size: 19px; font-weight: 600; color: #ffffff; line-height: 1.5;">
+      <div class="card" style="background: rgba(99, 102, 241, 0.12); border-color: rgba(99, 102, 241, 0.4); padding: 16px 20px;">
+        <div style="color: #a5b4fc; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px;">📌 Lát Cắt Một Câu (Core Slice)</div>
+        <p style="font-size: 17px; font-weight: 600; color: #ffffff; line-height: 1.5;">
           "Học viên Khóa 4 cần tra cứu nhanh và chính xác thời hạn nộp bài cùng quy chế tương ứng của từng loại nhiệm vụ (Lab, Daily Standup, Workshop, Điểm danh) mà không bị nhầm lẫn giữa hai hệ sinh thái Offline VinUni và Online Discord, nhờ trợ lý AI tự động phân loại đúng ngữ cảnh nhiệm vụ và trích xuất nguyên văn căn cứ quy định chính thức để học viên tự tin nộp đúng hạn, bảo toàn điểm số."
         </p>
       </div>
 
       <div class="grid-3">
         <div class="card">
-          <h3 class="card-title">🖥️ Front-End Discord UI</h3>
-          <ul style="font-size: 15px; color: #cbd5e1; line-height: 1.7; padding-left: 20px;">
-            <li>Mô phỏng kênh chat `#?-hỏi-trợ-lý-quy-chế`.</li>
-            <li><strong>Preset Prompts:</strong> 4 nút bấm gợi ý câu hỏi mẫu, định hướng ngay phạm vi (HAX G1).</li>
-            <li><strong>Nhãn màu hệ thống:</strong> Xanh VinUni vs Tím Discord.</li>
-            <li><strong>Nút TA-Bridge:</strong> 1-click báo sai cho TA (HAX G9).</li>
+          <h3 class="card-title">🖥️ 1. Front-End Discord UI</h3>
+          <ul style="font-size: 13.5px; color: #cbd5e1; line-height: 1.6; padding-left: 18px;">
+            <li>Giao diện kênh chat `#?-hỏi-trợ-lý-quy-chế`.</li>
+            <li><strong>Preset Chips:</strong> 4 nút bấm gợi ý câu hỏi mẫu giúp người dùng định hướng ngay phạm vi.</li>
+            <li><strong>Nhãn phân định:</strong> Xanh VinUni vs Tím Discord.</li>
+            <li><strong>Nút TA-Bridge:</strong> 1-click tạo ticket dập lửa.</li>
           </ul>
         </div>
 
         <div class="card">
-          <h3 class="card-title">🧠 Core Engine (LLM)</h3>
-          <ul style="font-size: 15px; color: #cbd5e1; line-height: 1.7; padding-left: 20px;">
-            <li>Kết nối đa nhà cung cấp qua OpenRouter.</li>
-            <li><strong>Mô hình:</strong> `openai/gpt-4o-mini` cho tốc độ phản hồi 1.2s - 2.5s.</li>
-            <li><strong>Guardrails:</strong> Chặn tiêm Prompt Injection, từ chối viết code giải bài, bảo vệ liêm chính học thuật.</li>
+          <h3 class="card-title">🧠 2. Core Reasoning Engine</h3>
+          <ul style="font-size: 13.5px; color: #cbd5e1; line-height: 1.6; padding-left: 18px;">
+            <li>Kết nối đa provider qua OpenRouter API.</li>
+            <li><strong>LLM:</strong> `openai/gpt-4o-mini` phản hồi dưới 2 giây.</li>
+            <li><strong>Guardrails:</strong> Chặn tiêm prompt injection, cấm giải bài tập hộ để bảo vệ liêm chính học thuật.</li>
+            <li><strong>Augment Mode:</strong> Luôn dẫn nguồn để học viên tự kiểm chứng trước khi hành động.</li>
           </ul>
         </div>
 
         <div class="card">
-          <h3 class="card-title">📚 Ma Trận Quy Chế (RAG)</h3>
-          <ul style="font-size: 15px; color: #cbd5e1; line-height: 1.7; padding-left: 20px;">
-            <li>Grounding 5 chính sách chuẩn: Lab, Standup, Điểm danh, Workshop, Thẩm quyền.</li>
-            <li>Trích dẫn nguyên văn điều khoản pháp lý.</li>
-            <li><strong>Graceful Failure:</strong> Cung cấp mẫu email gửi Lab Coach (`AIthucchien@vinuni.edu.vn`).</li>
+          <h3 class="card-title">🚫 3. Ba Non-Goals (Không Làm)</h3>
+          <ul style="font-size: 13.5px; color: #cbd5e1; line-height: 1.6; padding-left: 18px;">
+            <li><strong>Không chitchat:</strong> Từ chối lịch sự câu hỏi thời tiết, tán gẫu ngoài lề khóa học.</li>
+            <li><strong>Không code hộ:</strong> Cấm tuyệt đối sinh mã nguồn giải bài Lab 02 thay học viên.</li>
+            <li><strong>Không vượt quyền:</strong> Không tự sửa điểm danh, cung cấp mẫu email gửi Lab Coach.</li>
           </ul>
         </div>
       </div>
@@ -395,7 +399,7 @@
 
     <div class="slide-footer">
       <span>Mini Hackathon AI — Batch 04 · Lớp 3A · E403</span>
-      <span class="page-num">02 / 06</span>
+      <span class="page-indicator">02 / 06</span>
     </div>
   </div>
 </div>
@@ -405,64 +409,64 @@
   <div class="slide-content">
     <div class="slide-header">
       <div>
-        <div class="badge-container">
-          <span class="badge badge-purple">Rủi Ro & Trải Nghiệm</span>
-          <span class="badge badge-blue">SPEC §5 & §6</span>
+        <div class="badge-row">
+          <span class="badge badge-purple">Quản Trị Rủi Ro</span>
+          <span class="badge badge-blue">SPEC §5 & §6 · TAXONOMY & HAX</span>
         </div>
         <h1 class="slide-title">4 Lớp Chỗ Khó & Thiết Kế Trải Nghiệm HAX</h1>
-        <p class="slide-subtitle">Taxonomy lỗi nghiệp vụ và các nhánh ứng phó phòng thủ thông minh</p>
+        <p class="slide-subtitle">Bao phủ 12 kịch bản rủi ro nghiệp vụ và các cơ chế phòng thủ thoái lui an toàn</p>
       </div>
-      <div class="team-tag">
-        Nguyên tắc: <strong>HAX Toolkit</strong><br>
-        (G1, G2, G9, G10)
+      <div class="team-info">
+        Bộ quy chuẩn: <strong>HAX Toolkit (Microsoft)</strong><br>
+        Nguyên tắc: <strong>G1, G2, G9, G10</strong>
       </div>
     </div>
 
     <div class="slide-body">
-      <div class="grid-4" style="margin-bottom: 20px;">
-        <div class="card" style="border-top: 4px solid #38bdf8;">
-          <div style="font-size: 13px; font-weight: 700; color: #38bdf8; text-transform: uppercase;">Lớp 1 · Grounding</div>
-          <div style="font-weight: 700; font-size: 17px; margin: 6px 0 10px 0; color: #ffffff;">Nguồn Sự Thật</div>
-          <p style="font-size: 14px; color: #94a3b8; line-height: 1.5;">Hỏi thông tin chưa công bố hoặc tin đồn vô căn cứ (học bổng top 50, dời lịch ảo).</p>
-          <div style="margin-top: 10px; font-size: 13px; color: #34d399; font-weight: 600;">👉 Không bịa đặt, thừa nhận giới hạn văn bản.</div>
+      <div class="grid-4" style="margin-bottom: 14px;">
+        <div class="card" style="border-top: 4px solid #38bdf8; padding: 16px 18px;">
+          <div style="font-size: 12px; font-weight: 700; color: #38bdf8; text-transform: uppercase;">Lớp 1 · Grounding</div>
+          <div style="font-weight: 700; font-size: 16px; margin: 4px 0 8px 0; color: #ffffff;">Nguồn Sự Thật</div>
+          <p style="font-size: 13px; color: #94a3b8; line-height: 1.4;">Hỏi chính sách không tồn tại (học bổng top 50: `TC17`, tin đồn xóa vắng: `ADV07`).</p>
+          <div style="margin-top: 8px; font-size: 12.5px; color: #34d399; font-weight: 600;">👉 Thừa nhận giới hạn, bác bỏ tin đồn.</div>
         </div>
 
-        <div class="card" style="border-top: 4px solid #facc15;">
-          <div style="font-size: 13px; font-weight: 700; color: #facc15; text-transform: uppercase;">Lớp 2 · Ambiguity</div>
-          <div style="font-weight: 700; font-size: 17px; margin: 6px 0 10px 0; color: #ffffff;">Mơ Hồ Ngữ Cảnh</div>
-          <p style="font-size: 14px; color: #94a3b8; line-height: 1.5;">Hỏi trống không: "nộp sau 23h59 thì sao?", "hôm nay nộp bài gì?", gõ teencode.</p>
-          <div style="margin-top: 10px; font-size: 13px; color: #34d399; font-weight: 600;">👉 Phân tách cả 2 nhánh (Lab vs Standup).</div>
+        <div class="card" style="border-top: 4px solid #facc15; padding: 16px 18px;">
+          <div style="font-size: 12px; font-weight: 700; color: #facc15; text-transform: uppercase;">Lớp 2 · Ambiguity</div>
+          <div style="font-weight: 700; font-size: 16px; margin: 4px 0 8px 0; color: #ffffff;">Mơ Hồ Ngữ Cảnh</div>
+          <p style="font-size: 13px; color: #94a3b8; line-height: 1.4;">Hỏi cộc lốc: "muộn sau 23h59 thì sao" (`TC03`), hỏi teencode (`TC19`).</p>
+          <div style="margin-top: 8px; font-size: 12.5px; color: #34d399; font-weight: 600;">👉 Phân tách cả 2 nhánh (Lab vs Standup).</div>
         </div>
 
-        <div class="card" style="border-top: 4px solid #f87171;">
-          <div style="font-size: 13px; font-weight: 700; color: #f87171; text-transform: uppercase;">Lớp 3 · Out of Scope</div>
-          <div style="font-weight: 700; font-size: 17px; margin: 6px 0 10px 0; color: #ffffff;">Ngoài Thẩm Quyền</div>
-          <p style="font-size: 14px; color: #94a3b8; line-height: 1.5;">Báo ốm nhờ sửa điểm danh, nhờ code hộ bài Lab, tiêm prompt đổi luật.</p>
-          <div style="margin-top: 10px; font-size: 13px; color: #34d399; font-weight: 600;">👉 Từ chối dứt khoát + Cấp mẫu email xin phép.</div>
+        <div class="card" style="border-top: 4px solid #f87171; padding: 16px 18px;">
+          <div style="font-size: 12px; font-weight: 700; color: #f87171; text-transform: uppercase;">Lớp 3 · Out of Scope</div>
+          <div style="font-weight: 700; font-size: 16px; margin: 4px 0 8px 0; color: #ffffff;">Ngoài Thẩm Quyền</div>
+          <p style="font-size: 13px; color: #94a3b8; line-height: 1.4;">Nhờ sửa điểm danh (`TC09`), nhờ giải bài (`TC18`), tiêm prompt (`ADV01`).</p>
+          <div style="margin-top: 8px; font-size: 12.5px; color: #34d399; font-weight: 600;">👉 Từ chối dứt khoát + Mở mẫu email.</div>
         </div>
 
-        <div class="card" style="border-top: 4px solid #c084fc;">
-          <div style="font-size: 13px; font-weight: 700; color: #c084fc; text-transform: uppercase;">Lớp 4 · Domain Nuance</div>
-          <div style="font-weight: 700; font-size: 17px; margin: 6px 0 10px 0; color: #ffffff;">Đặc Thù Khóa 4</div>
-          <p style="font-size: 14px; color: #94a3b8; line-height: 1.5;">Nhầm Daily Standup (phạt XP) sang Điểm danh (phạt rớt môn); Coach dời lịch.</p>
-          <div style="margin-top: 10px; font-size: 13px; color: #34d399; font-weight: 600;">👉 Đập tan nỗi sợ: Standup không gây vắng học.</div>
+        <div class="card" style="border-top: 4px solid #c084fc; padding: 16px 18px;">
+          <div style="font-size: 12px; font-weight: 700; color: #c084fc; text-transform: uppercase;">Lớp 4 · Domain Nuance</div>
+          <div style="font-weight: 700; font-size: 16px; margin: 4px 0 8px 0; color: #ffffff;">Đặc Thù Khóa 4</div>
+          <p style="font-size: 13px; color: #94a3b8; line-height: 1.4;">Nhầm Standup (XP) với Điểm danh (Vắng: `TC01`, `TC05`), Coach dời lịch (`TC08`).</p>
+          <div style="margin-top: 8px; font-size: 12.5px; color: #34d399; font-weight: 600;">👉 Khẳng định Standup không gây vắng học.</div>
         </div>
       </div>
 
-      <div class="card card-highlight">
-        <h3 style="font-size: 17px; color: #e2e8f0; margin-bottom: 8px;">🛠️ Ứng Dụng HAX Toolkit Giải Quyết Điểm Nghẽn Trải Nghiệm</h3>
-        <div style="display: flex; gap: 24px; font-size: 14px; color: #cbd5e1;">
-          <div><strong style="color: #60a5fa;">HAX G1:</strong> Thanh Preset Prompts giúp người dùng biết ngay bot làm được gì.</div>
-          <div><strong style="color: #a78bfa;">HAX G2:</strong> Gắn nhãn màu phân định hệ thống + Hộp dẫn chứng điều khoản.</div>
-          <div><strong style="color: #f472b6;">HAX G9:</strong> Nút `[🚩 Báo sai]` kích hoạt TA-Bridge gửi ticket kèm context.</div>
-          <div><strong style="color: #34d399;">HAX G10:</strong> Mẫu email soạn sẵn gửi `AIthucchien@vinuni.edu.vn`.</div>
+      <div class="card card-highlight" style="padding: 16px 20px;">
+        <h3 style="font-size: 15px; color: #ffffff; margin-bottom: 8px;">🛠️ 4 Nguyên Tắc HAX Áp Dụng Cụ Thể Vào Prototype:</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 13px; color: #cbd5e1;">
+          <div><strong style="color: #60a5fa;">HAX G1 (Năng lực hệ thống):</strong> Banner đầu kênh chat + Preset Chips giúp học viên biết ngay phạm vi hỗ trợ.</div>
+          <div><strong style="color: #a78bfa;">HAX G2 (Minh bạch căn cứ):</strong> Nhãn màu hệ thống + Hộp trích dẫn nguyên văn điều khoản quy chế.</div>
+          <div><strong style="color: #f472b6;">HAX G9 (Hỗ trợ sửa sai):</strong> Nút `[🚩 Báo sai / Chuyển TA]` tự động kích hoạt ticket TA-Bridge kèm context hội thoại.</div>
+          <div><strong style="color: #34d399;">HAX G10 (Thoái lui an toàn):</strong> Gắn nhãn `[⛔ NGOÀI THẨM QUYỀN]` + Cung cấp mẫu email gửi `AIthucchien@vinuni.edu.vn`.</div>
         </div>
       </div>
     </div>
 
     <div class="slide-footer">
       <span>Mini Hackathon AI — Batch 04 · Lớp 3A · E403</span>
-      <span class="page-num">03 / 06</span>
+      <span class="page-indicator">03 / 06</span>
     </div>
   </div>
 </div>
@@ -472,84 +476,84 @@
   <div class="slide-content">
     <div class="slide-header">
       <div>
-        <div class="badge-container">
+        <div class="badge-row">
           <span class="badge badge-green">Thực Nghiệm Định Lượng</span>
-          <span class="badge badge-blue">SPEC §7</span>
+          <span class="badge badge-blue">SPEC §7 · QUALITY BAR & RUN RESULTS</span>
         </div>
         <h1 class="slide-title">Đo Kiểm Thực Tế & Khóa Ngưỡng Chất Lượng</h1>
-        <p class="slide-subtitle">Thực thi đo lường bằng mô hình AI thật qua OpenRouter trên 30 ca kiểm thử</p>
+        <p class="slide-subtitle">Đo lường định lượng trên 30 ca kiểm thử bằng OpenRouter API (`openai/gpt-4o-mini`)</p>
       </div>
-      <div class="team-tag">
+      <div class="team-info">
         Quality Bar: <strong>Khóa cứng 21:00 17/9</strong><br>
-        Tổng tỷ lệ: <strong class="highlight-pass">29 / 30 PASS (96.7%)</strong>
+        Tổng tỷ lệ: <strong class="text-pass">29 / 30 PASS (96.7%)</strong>
       </div>
     </div>
 
     <div class="slide-body">
-      <div class="card" style="padding: 0; overflow: hidden; margin-bottom: 24px;">
-        <table class="slide-table">
+      <div class="card" style="padding: 0; overflow: hidden; margin-bottom: 14px;">
+        <table class="data-table">
           <thead>
             <tr>
-              <th>Bộ Kiểm Thử</th>
+              <th>Bộ Dữ Liệu Kiểm Thử</th>
               <th>Số Ca</th>
-              <th>Cam Kết Quality Bar</th>
-              <th>Thực Tế Đo Kiểm</th>
+              <th>Cam Kết Quality Bar (CP4)</th>
+              <th>Kết Quả Thực Nghiệm</th>
               <th>Tỷ Lệ Đạt</th>
-              <th>Tình Trạng</th>
+              <th>Đánh Giá</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td><strong>Bộ 1: Golden Set (Chuẩn)</strong><br><small style="color: #94a3b8;">50% trích xuất trực tiếp từ chatlog thật</small></td>
+              <td><strong>Bộ 1: Golden Set (Chuẩn)</strong><br><small style="color: #94a3b8;">50% trích từ tin nhắn thật (M75012, M07416...)</small></td>
               <td>20 ca</td>
               <td>Tỷ lệ đạt &ge; 85.0%</td>
               <td><strong>20 / 20 ca</strong></td>
-              <td class="highlight-pass">100.0%</td>
+              <td class="text-pass">100.0%</td>
               <td><span class="badge badge-green">VƯỢT NGƯỠNG</span></td>
             </tr>
             <tr>
-              <td><strong>Tiêu chuẩn Không khoan nhượng (Zero-Tolerance)</strong><br><small style="color: #94a3b8;">Không nhầm Standup (XP) vs Điểm danh (Vắng)</small></td>
+              <td><strong>Tiêu chuẩn Không Khoan Nhượng</strong><br><small style="color: #94a3b8;">Tuyệt đối không nhầm Standup (XP) vs Điểm danh (Vắng)</small></td>
               <td>Cốt lõi</td>
-              <td>Đạt tuyệt đối 100%</td>
+              <td>Đạt tuyệt đối 100.0%</td>
               <td><strong>100% Phân định đúng</strong></td>
-              <td class="highlight-pass">100.0%</td>
-              <td><span class="badge badge-green">ĐẠT CHUẨN</span></td>
+              <td class="text-pass">100.0%</td>
+              <td><span class="badge badge-green">HOÀN HẢO</span></td>
             </tr>
             <tr>
-              <td><strong>Bộ 2: Thách Thức Nâng Cao (Adversarial)</strong><br><small style="color: #94a3b8;">Tiêm prompt, giả mạo Coach, xin code, teencode</small></td>
+              <td><strong>Bộ 2: Thách Thức Nâng Cao (Adversarial)</strong><br><small style="color: #94a3b8;">Tiêm prompt, giả mạo Coach, teencode, xin code</small></td>
               <td>10 ca</td>
               <td>Phòng thủ &ge; 80.0%</td>
               <td><strong>9 / 10 ca</strong></td>
-              <td class="highlight-pass">90.0%</td>
+              <td class="text-pass">90.0%</td>
               <td><span class="badge badge-green">VƯỢT NGƯỠNG</span></td>
             </tr>
-            <tr style="background: rgba(88, 101, 242, 0.1);">
+            <tr style="background: rgba(99, 102, 241, 0.12);">
               <td><strong>TỔNG CỘNG TOÀN DIỆN (EVAL SUITE)</strong></td>
               <td><strong>30 ca</strong></td>
               <td><strong>Toàn diện &ge; 85.0%</strong></td>
               <td><strong>29 / 30 ca</strong></td>
-              <td class="highlight-pass" style="font-size: 18px;">96.7%</td>
-              <td><span class="badge badge-purple" style="font-size: 13px;">XUẤT SẮC</span></td>
+              <td class="text-pass" style="font-size: 16px;">96.7%</td>
+              <td><span class="badge badge-purple">XUẤT SẮC</span></td>
             </tr>
           </tbody>
         </table>
       </div>
 
       <div class="grid-2">
-        <div class="stat-box" style="margin: 0; border-color: #22c55e;">
-          <div class="stat-num" style="color: #4ade80;">10% ➔ 95% ➔ 96.7%</div>
-          <div class="stat-desc">Tiến trình cải tiến thực tế: Lượt v0 (10% do bịa luật) ➔ Lượt v1 (95% khi nhúng RAG Policy) ➔ Lượt v2 (96.7% toàn diện cả Adversarial).</div>
+        <div class="stat-block" style="margin: 0; border-color: #22c55e;">
+          <div class="stat-number" style="color: #4ade80;">10% ➔ 95% ➔ 96.7%</div>
+          <div class="stat-label">Tiến trình cải tiến thực tế: Lượt v0 (10% do bịa luật khi chưa có RAG) ➔ Lượt v1 (95% khi nhúng Ma trận Quy chế) ➔ Lượt v2 (96.7% toàn diện cả 30 ca).</div>
         </div>
-        <div class="stat-box" style="margin: 0; border-color: #a855f7;">
-          <div class="stat-num" style="color: #c084fc;">100% Logged</div>
-          <div class="stat-desc">Toàn bộ 4 lượt chạy đều lưu log JSON thô có độ trễ (latency), output thực tế tại thư mục `codebase/runs/` trên repo GitHub.</div>
+        <div class="stat-block" style="margin: 0; border-color: #38bdf8;">
+          <div class="stat-number">4 Lượt Logged Đầy Đủ</div>
+          <div class="stat-label">100% các lượt chạy đều được lưu trữ log JSON thô có độ trễ (latency) và phản hồi thực tế tại thư mục `codebase/runs/` trên repo GitHub.</div>
         </div>
       </div>
     </div>
 
     <div class="slide-footer">
       <span>Mini Hackathon AI — Batch 04 · Lớp 3A · E403</span>
-      <span class="page-num">04 / 06</span>
+      <span class="page-indicator">04 / 06</span>
     </div>
   </div>
 </div>
@@ -559,53 +563,53 @@
   <div class="slide-content">
     <div class="slide-header">
       <div>
-        <div class="badge-container">
+        <div class="badge-row">
           <span class="badge badge-orange">Minh Bạch & Kiểm Chứng</span>
-          <span class="badge badge-blue">R6 & SELF-DISCLOSURE</span>
+          <span class="badge badge-blue">R6 & SELF-DISCLOSURE · MOM TEST</span>
         </div>
         <h1 class="slide-title">Học Từ Thất Bại & Kiểm Chứng Người Dùng (R6)</h1>
         <p class="slide-subtitle">Tự khai báo trung thực ca chưa đạt và kết quả phỏng vấn 5 người dùng theo Mom Test</p>
       </div>
-      <div class="team-tag">
+      <div class="team-info">
         Willing Users: <strong>2/2 Khai từ CP1</strong><br>
-        Tổng người thử: <strong>5 bạn cùng lớp 3A</strong>
+        Tổng người thử: <strong>5 bạn cùng lớp 3A (E403)</strong>
       </div>
     </div>
 
     <div class="slide-body">
       <div class="grid-2">
         <div class="card" style="border-left: 4px solid #ef4444;">
-          <h3 class="card-title" style="color: #f87171;">⚠️ Tự Khai Báo Ca ADV09 (1 Ca Chưa Đạt)</h3>
-          <p style="font-size: 14px; color: #cbd5e1; line-height: 1.5; margin-bottom: 12px;">
-            <strong>Tình huống:</strong> Học viên quét mã QR Form điểm danh bị lỗi mạng quay tròn khi hết giờ học.
+          <h3 class="card-title" style="color: #f87171;">⚠️ Tự Khai Báo Ca ADV09 (1 Ca Chưa Đạt Duy Nhất)</h3>
+          <p style="font-size: 13.5px; color: #cbd5e1; line-height: 1.5; margin-bottom: 10px;">
+            <strong>Tình huống:</strong> Học viên quét mã QR Form điểm danh nhưng bị lỗi mạng quay tròn khi hết giờ.
           </p>
-          <div style="font-size: 14px; color: #94a3b8; line-height: 1.6;">
-            <p>• <strong>Hiện tượng:</strong> AI đã hướng dẫn chụp ảnh bằng chứng và báo TA qua Discord rất tốt, nhưng <em>chưa in trực tiếp địa chỉ email chính thức</em> trong đoạn văn bản thuần.</p>
-            <p style="margin-top: 6px;">• <strong>Bài học rút ra:</strong> Không chỉ dựa vào nút bấm giao diện, phải in đậm địa chỉ email <code style="color: #38bdf8;">AIthucchien@vinuni.edu.vn</code> trực tiếp trong câu trả lời văn bản.</p>
+          <div style="font-size: 13px; color: #94a3b8; line-height: 1.5;">
+            <p>• <strong>Hiện tượng:</strong> AI đã hướng dẫn chụp màn hình bằng chứng và báo TA rất tốt, nhưng <em>thiếu chuỗi email chính thức</em> trong đoạn văn bản thuần.</p>
+            <p style="margin-top: 6px;">• <strong>Bài học rút ra:</strong> Không chỉ phụ thuộc vào nút bấm giao diện, phải in đậm địa chỉ email <code style="color: #38bdf8;">AIthucchien@vinuni.edu.vn</code> trực tiếp trong phản hồi.</p>
           </div>
         </div>
 
         <div class="card card-highlight" style="border-left: 4px solid #22c55e;">
-          <h3 class="card-title" style="color: #4ade80;">👥 Phản Hồi Mom Test Từ 5 Người Dùng (R6)</h3>
-          <div style="font-size: 14px; color: #cbd5e1; line-height: 1.6;">
-            <p>• <strong>Nguyễn Văn Hoàng (Willing User):</strong> <em>"Bot bảo trừ 50% sau 23h59 rồi, nhưng quy chế nộp bù trước 12h trưa mai hơi nhiều chữ quá."</em> ➔ <strong>Nhóm in đậm mốc 12:00 trưa & tăng cỡ chữ.</strong></p>
-            <p style="margin-top: 8px;">• <strong>Trần Thị Mai (Willing User):</strong> <em>"May quá nó ghi rõ không bị vắng học trên lớp, nút chuyển TA có gửi thật không?"</em> ➔ <strong>Bổ sung tooltip giải thích cơ chế TA-Bridge.</strong></p>
-            <p style="margin-top: 8px;">• <strong>Lê Bảo Anh:</strong> <em>"Bấm phát hiện sẵn mẫu email gửi Lab Coach đỡ phải tự soạn văn bản xin phép."</em> ➔ <strong>Xác nhận giá trị cao của HAX G10.</strong></p>
+          <h3 class="card-title" style="color: #4ade80;">👥 Phản Hồi Mom Test Từ 5 Người Dùng (Khối R6)</h3>
+          <div style="font-size: 13px; color: #cbd5e1; line-height: 1.5;">
+            <p>• <strong>Nguyễn Văn Hoàng (Willing User):</strong> <em>"Bot bảo trừ 50% sau 23h59 rồi, nhưng quy chế nộp bù trước 12h trưa mai hơi nhiều chữ quá."</em> ➔ <strong>In đậm mốc giờ vàng 12:00 trưa.</strong></p>
+            <p style="margin-top: 6px;">• <strong>Trần Thị Mai (Willing User):</strong> <em>"May quá nó ghi rõ không bị vắng học trên lớp, nút chuyển TA có gửi thật không?"</em> ➔ <strong>Bổ sung tooltip giải thích TA-Bridge.</strong></p>
+            <p style="margin-top: 6px;">• <strong>Lê Bảo Anh:</strong> <em>"Bấm phát hiện sẵn mẫu email gửi Lab Coach đỡ phải tự soạn văn bản xin phép."</em> ➔ <strong>Xác nhận giá trị cao của HAX G10.</strong></p>
           </div>
         </div>
       </div>
 
-      <div class="card" style="margin-top: 20px; background: rgba(30, 41, 59, 0.3);">
-        <h4 style="font-size: 15px; color: #cbd5e1; margin-bottom: 8px;">📝 Cập Nhật Changelog §9 (Phiên Bản v2.2):</h4>
-        <p style="font-size: 14px; color: #94a3b8;">
-          Dựa trên phản hồi người dùng R6, nhóm đã tối ưu hóa hệ thống phân cấp thị giác (in đậm mốc giờ vàng, tăng kích thước font trích dẫn quy chế từ 12px lên 13.5px) và nhúng email hỗ trợ khẩn cấp vào prompt template.
+      <div class="card" style="background: rgba(30, 41, 59, 0.4); padding: 14px 20px;">
+        <h4 style="font-size: 14px; color: #e2e8f0; margin-bottom: 6px;">📝 Cập Nhật Changelog §9 (Phiên Bản v2.2):</h4>
+        <p style="font-size: 13px; color: #94a3b8; line-height: 1.5;">
+          Dựa trên phản hồi R6, nhóm đã cải tiến phân cấp thị giác (in đậm mốc deadline vàng `23:59` và `12:00 trưa`, tăng kích thước font trích dẫn quy chế từ 12px lên 13.5px) và nhúng email hỗ trợ khẩn cấp vào prompt template.
         </p>
       </div>
     </div>
 
     <div class="slide-footer">
       <span>Mini Hackathon AI — Batch 04 · Lớp 3A · E403</span>
-      <span class="page-num">05 / 06</span>
+      <span class="page-indicator">05 / 06</span>
     </div>
   </div>
 </div>
@@ -615,24 +619,24 @@
   <div class="slide-content">
     <div class="slide-header">
       <div>
-        <div class="badge-container">
+        <div class="badge-row">
           <span class="badge badge-purple">Đội Ngũ & Lộ Trình</span>
-          <span class="badge badge-blue">VIBE-CODING READY</span>
+          <span class="badge badge-blue">VIBE-CODING READY · CHUNG KẾT PHÒNG E403</span>
         </div>
         <h1 class="slide-title">Lộ Trình Phát Triển & Đội Ngũ Thực Hiện</h1>
-        <p class="slide-subtitle">Sẵn sàng trả lời chất vấn vòng Chung kết Phòng E403</p>
+        <p class="slide-subtitle">Sẵn sàng bảo vệ sản phẩm và trả lời chất vấn của Hội đồng Giám khảo</p>
       </div>
-      <div class="team-tag">
+      <div class="team-info">
         Trạng thái: <strong>Hoàn tất CP1 ➔ CP5</strong><br>
-        Sẵn sàng: <strong>Pitching tại CP6</strong>
+        Mục tiêu: <strong>Chinh phục Top 3 Phòng E403</strong>
       </div>
     </div>
 
     <div class="slide-body">
-      <div class="grid-2" style="margin-bottom: 20px;">
+      <div class="grid-2">
         <div class="card">
-          <h3 class="card-title">🚀 Lộ Trình Mở Rộng Sau Hackathon</h3>
-          <div style="font-size: 15px; color: #cbd5e1; line-height: 1.7;">
+          <h3 class="card-title">🚀 Lộ Trình Mở Rộng Sản Phẩm</h3>
+          <div style="font-size: 13.5px; color: #cbd5e1; line-height: 1.6;">
             <p><strong>• Giai đoạn 1 (Tuần tới):</strong> Đóng gói Discord Gateway Bot 24/7, xin cấp quyền tích hợp vào server Discord chính thức của Khóa 4.</p>
             <p style="margin-top: 8px;"><strong>• Giai đoạn 2 (Dài hạn):</strong> Tích hợp Vector Database (ChromaDB) để tự động hóa ingest thông báo mới từ giảng viên mà không cần nạp prompt tĩnh.</p>
             <p style="margin-top: 8px;"><strong>• Giai đoạn 3:</strong> Mở rộng giải pháp sang Track A để hỗ trợ hỏi đáp slide bài giảng VLearn.</p>
@@ -640,26 +644,26 @@
         </div>
 
         <div class="card card-highlight">
-          <h3 class="card-title">👥 Phân Công Trách Nhiệm Thành Viên</h3>
-          <div style="font-size: 14px; color: #cbd5e1; line-height: 1.6;">
-            <p><strong>• Bùi Đình Đề (2A202602818 - Đội trưởng):</strong> Quản trị dự án, viết AI Spec (§1-§4, §7), thiết kế Core Engine & Multi-provider architecture.</p>
-            <p style="margin-top: 6px;"><strong>• Phùng Gia Khánh (2A202602585):</strong> Khai phá 1.092 tin nhắn `k4_messages.csv`, xây dựng bộ Golden Set 20 ca.</p>
-            <p style="margin-top: 6px;"><strong>• Lê Tuấn Hưng (2A202602665):</strong> Phát triển giao diện Web Discord UI (`index.html`), kết nối API thời gian thực.</p>
-            <p style="margin-top: 6px;"><strong>• Đinh Quang Lâm (2A202602875):</strong> Xây dựng ma trận quy chế, thực thi đo lường 30 ca & quay video demo dự phòng.</p>
+          <h3 class="card-title">👥 Phân Công Trách Nhiệm 4 Thành Viên</h3>
+          <div style="font-size: 13px; color: #cbd5e1; line-height: 1.6;">
+            <p><strong>• Bùi Đình Đề (2A202602818 - Đội trưởng):</strong> Quản trị dự án, viết AI Spec (§1-§4, §7), thiết kế kiến trúc Core Engine & Multi-provider.</p>
+            <p style="margin-top: 4px;"><strong>• Phùng Gia Khánh (2A202602585):</strong> Khai phá 1.092 tin nhắn `k4_messages.csv`, xây dựng bộ Golden Set 20 ca.</p>
+            <p style="margin-top: 4px;"><strong>• Lê Tuấn Hưng (2A202602665):</strong> Phát triển giao diện Web Discord UI (`index.html`), kết nối API thời gian thực.</p>
+            <p style="margin-top: 4px;"><strong>• Đinh Quang Lâm (2A202602875):</strong> Xây dựng ma trận quy chế, thực thi đo lường 30 ca & quay video demo dự phòng.</p>
           </div>
         </div>
       </div>
 
-      <div style="text-align: center; padding: 14px; background: rgba(88, 101, 242, 0.15); border-radius: 12px; border: 1px solid rgba(88, 101, 242, 0.4);">
-        <span style="font-size: 16px; font-weight: 700; color: #ffffff;">
-          🎯 Nhóm XYZabc cam kết: Bảo vệ điểm số học viên — Giải phóng thời gian Trợ giảng — Trung thực tuyệt đối trong dữ liệu thực nghiệm!
+      <div style="text-align: center; padding: 12px; background: rgba(99, 102, 241, 0.15); border-radius: 10px; border: 1px solid rgba(99, 102, 241, 0.4);">
+        <span style="font-size: 15px; font-weight: 700; color: #ffffff;">
+          🎯 Cam kết của Nhóm XYZabc: Bảo vệ điểm số học viên — Giải phóng thời gian Trợ giảng — Trung thực tuyệt đối trong dữ liệu thực nghiệm!
         </span>
       </div>
     </div>
 
     <div class="slide-footer">
       <span>Mini Hackathon AI — Batch 04 · Lớp 3A · E403</span>
-      <span class="page-num">06 / 06</span>
+      <span class="page-indicator">06 / 06</span>
     </div>
   </div>
 </div>

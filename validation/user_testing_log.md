@@ -37,3 +37,4 @@
 4. **Gì để dành sau (Kế hoạch dài hạn sau Hackathon):**
    - Đóng gói thành Discord Gateway Bot chính thức để tích hợp trực tiếp vào Server Discord của toàn bộ Khóa 4 và các khóa sau.
    - Xây dựng Vector Database phân tán (ChromaDB) để tự động hóa việc cập nhật các thông báo mới từ ban tổ chức theo thời gian thực mà không cần nạp lại context prompt.
+
