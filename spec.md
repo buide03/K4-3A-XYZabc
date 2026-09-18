@@ -13,7 +13,7 @@
 - **Workflow hiện tại (Khi chưa có giải pháp tối ưu):**
   1. Học viên phát sinh thắc mắc khi gần đến giờ nộp bài (deadline) hoặc giờ lên lớp.
   2. Lên kênh Discord chung, tag `@BOT` đặt câu hỏi nhanh để đỡ phải lội tìm thông báo cũ.
-  3. Bot hiện tại bắt chọn menu 1-2-3 máy móc, hoặc trả lời sai ngữ cảnh ("râu ông nọ cắm cằm bà kia").
+  3. Bot hiện tại bắt chọn menu 1-2-3 máy móc, hoặc trả lời sai ngữ cảnh.
   4. Học viên tin tưởng làm theo -> Bị phạt trừ điểm / trễ hạn bài Lab / hoang mang vắng học.
   5. Học viên gửi khiếu nại lên Trợ giảng (TA/Mod), gây ùn tắc kênh hỗ trợ và mất thời gian của đội ngũ vận hành.
 
